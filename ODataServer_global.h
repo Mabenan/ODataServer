@@ -1,0 +1,12 @@
+#ifndef ODATASERVER_GLOBAL_H
+#define ODATASERVER_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(ODATASERVER_LIBRARY)
+#  define ODATASERVER_EXPORT Q_DECL_EXPORT
+#else
+#  define ODATASERVER_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // ODATASERVER_GLOBAL_H
