@@ -8,6 +8,8 @@ addons:
     packages:
     - qt512-meta-minimal
     - cmake
+before_install:
+  - source /opt/qt512/bin/qt512-env.sh
 compiler: g++
 script:
   - qmake --version
