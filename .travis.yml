@@ -1,0 +1,21 @@
+language: cpp
+sudo: required
+dist: bionic
+addons:
+  apt:
+    sources:
+    - sourceline: 'ppa:beineri/opt-qt-5.12.3-bionic'
+    packages:
+    - qt512-meta-minimal
+    - cmake
+compiler: g++
+script:
+  - qmake --version
+  - mkdir build
+  - cd build
+  - cmake ..
+  - cmake --build .
+  - ls lib
+  - ls bin
+  - cp -r lib bin/plugins
+  - make test
