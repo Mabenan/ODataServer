@@ -12,5 +12,6 @@
         "xlocnum": "cpp",
         "*.tcc": "cpp",
         "functional": "cpp"
-    }
+    },
+    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools"
 }

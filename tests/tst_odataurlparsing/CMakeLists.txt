@@ -17,7 +17,18 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
   add_executable(${target} ${SRC} ${HEADER})
 find_package(Qt5Core REQUIRED)
 qt5_use_modules(${target} Core Test)
-
-add_test(${target} ${CMAKE_BINARY_DIR}/bin/${target})
-    set_property(TEST ${target} PROPERTY ENVIRONMENT "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${CMAKE_BINARY_DIR}/bin:${CMAKE_BINARY_DIR}/lib")
+set_target_properties(${target}
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/${target}"
+)
+add_test(NAME ${target} COMMAND ${target})
+    if(WIN32)               
+    STRING(REPLACE "\\;" ";" PATH_STRING "$ENV{PATH}${CMAKE_BINARY_DIR}/bin;${CMAKE_BINARY_DIR}/lib")
+    STRING(REPLACE ";" "\\;" PATH_STRING "${PATH_STRING}")
+    set_property(TEST ${target} PROPERTY ENVIRONMENT "PATH=${PATH_STRING}" )
+     else()
+    set_property(TEST ${target} PROPERTY ENVIRONMENT "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${CMAKE_BINARY_DIR}/bin:${CMAKE_BINARY_DIR}/lib" )
+     endif()
 target_link_libraries(${target} ODataServer)
