@@ -7,13 +7,19 @@
 class ODATASERVER_EXPORT ODataEntity : public QObject
 {
     Q_OBJECT
-
+protected:
+	QString name;
+	QString description;
 public:
 
     ODataEntity(QObject * parent = nullptr);
 
-
-
+	const QString& getName() const {
+		return name;
+	}
+    virtual QString getDescription() {
+    	return this->description;
+    }
 };
 
 #endif // !ODATA_ENTITY_H

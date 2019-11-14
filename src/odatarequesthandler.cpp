@@ -1,31 +1,21 @@
 #include "odatarequesthandler.h"
 #include "ODataServiceDocument.h"
 #include "odataentitycontroller.h"
-ODataRequestHandler::ODataRequestHandler(QObject *parent) : QObject(parent)
+ODataRequestHandler::ODataRequestHandler(QString host, QString base,QObject *parent) : QObject(parent)
 {
     this->urlParser = new ODataURLParser(this);
-    this->model = new ODataModel(this);
+    this->host = host;
+    this->base = base;
+    this->model = new ODataModel(host,base,this);
 }
 
-QVariant ODataRequestHandler::handleRequest(QString base, QUrl url, QUrlQuery query)
+QVariant ODataRequestHandler::handleRequest(QUrl url, QUrlQuery query)
 {
-    if (url.path() == base)
+    if (url.path() == this->base)
     {
-        ODataServiceDocument * serviceDoc = new ODataServiceDocument(this);
-        serviceDoc->context = url.adjusted(QUrl::RemovePath |
-                                           QUrl::RemoveQuery |
-                                           QUrl::RemoveFragment ).toString() + base + "$metadata";
-        QMap<QString, ODataEntityController *> map = this->model->getEntities();
-        foreach(QString key, map.keys()){
-            ODataServiceDocumentEntry * docEntry = new ODataServiceDocumentEntry();
-            docEntry->name = map[key]->getName();
-            docEntry->url = map[key]->getName() + "Set";
-            docEntry->kind = "EntitySet";
-            docEntry->title = map[key]->getDescription();
-            serviceDoc->value.push_back(docEntry);
-        }
+    	ODataServiceDocument * serviceDoc = this->model->getServiceDocument();
         return serviceDoc->getJson();
-    }else if(url.path().toLower() == base + "$metadata"){
+    }else if(url.path().toLower() == this->base + "$metadata"){
         return "";
     }
     else

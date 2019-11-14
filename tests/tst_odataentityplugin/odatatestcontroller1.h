@@ -14,12 +14,8 @@ public:
     void updateSet(QList<ODataEntity> changedEntities) const;
     void deleteSet(QList<ODataEntity> changedEntities) const;
     void insertSet(QList<ODataEntity> changedEntities) const;
-    QString getName() const;
-    ODataEntity *getNewEntity() const;
+    ODataEntitySet * getEntitySet();
 
-    // ODataEntityController interface
-public:
-    QString getDescription() const;
 };
 
 #endif // ODATATESTCONTROLLER1_H

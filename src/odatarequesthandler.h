@@ -15,10 +15,12 @@ class ODATASERVER_EXPORT ODataRequestHandler : public QObject
 private:
     ODataURLParser * urlParser;
     ODataModel * model;
+    QString host;
+    QString base;
 public:
-    explicit ODataRequestHandler(QObject *parent = nullptr);
+    explicit ODataRequestHandler(QString host, QString base,QObject *parent = nullptr);
 
-    QVariant handleRequest(QString base, QUrl url, QUrlQuery query);
+    QVariant handleRequest(QUrl url, QUrlQuery query);
 
 signals:
 

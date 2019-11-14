@@ -6,7 +6,7 @@
 #include <QUrlQuery>
 #include "ODataModel.h"
 #include "ODataFilter.h"
-#include "ODataEntity.h"
+#include "ODataEntitySet.h"
 
 class ODATASERVER_EXPORT ODataEntityController : public QObject
 {
@@ -20,9 +20,7 @@ public:
     virtual void updateSet(QList<ODataEntity> changedEntities) const = 0;
     virtual void deleteSet(QList<ODataEntity> changedEntities) const = 0;
     virtual void insertSet(QList<ODataEntity> changedEntities) const = 0;
-    virtual QString getName()  const = 0;
-    virtual QString getDescription()  const = 0;
-    virtual ODataEntity * getNewEntity() const = 0;
+    virtual ODataEntitySet * getEntitySet() = 0;
 signals:
 
 public slots:

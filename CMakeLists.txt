@@ -10,7 +10,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 function(add_unit_test target)
 get_property(UNIT_TEST_TARGETS_L GLOBAL PROPERTY UNIT_TEST_TARGETS)
     set_property(GLOBAL PROPERTY UNIT_TEST_TARGETS ${UNIT_TEST_TARGETS_L} ${target})
-add_test(NAME ${target} COMMAND ${target})
+add_test(NAME ${target} COMMAND ${target} -v2)
 endfunction()
 add_subdirectory(src)
 add_subdirectory(tests)
@@ -19,6 +19,6 @@ message(${UNIT_TEST_TARGETS_L})
 add_custom_target( all_tests ALL DEPENDS ${UNIT_TEST_TARGETS_L} )
 add_custom_command(TARGET "all_tests"
                    COMMENT "Run tests"
-                   POST_BUILD COMMAND ctest
+                   POST_BUILD COMMAND ctest --verbose
                    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )

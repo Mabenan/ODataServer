@@ -1,5 +1,5 @@
 #include "odatatestcontroller2.h"
-#include "ODataTestEntity2.h"
+#include "ODataTestEntitySet2.h"
 
 ODataTestController2::ODataTestController2()
 {
@@ -30,19 +30,8 @@ void ODataTestController2::insertSet(QList<ODataEntity> changedEntities) const
 {
 
 }
-
-QString ODataTestController2::getName() const
+ODataEntitySet *ODataTestController2::getEntitySet()
 {
-    return "TestEntity2";
-}
+    return new ODataTestEntitySet2(this);
 
-ODataEntity *ODataTestController2::getNewEntity() const
-{
-    return new ODataTestEntity2();
-
-}
-
-QString ODataTestController2::getDescription() const
-{
-    return "Test Entity 2";
 }

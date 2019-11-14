@@ -9,6 +9,8 @@
 #include "ODataEntity.h"
 #include <QtPlugin>
 #include "odataentitycontroller.h"
+#include "ODataEntitySet.h"
+
 #define ODataEntityInterface_iid "com.odataserver.ODataEntityInterface/1.0"
 class ODATASERVER_EXPORT ODataEntityInterface : public QObject
 {
@@ -22,6 +24,7 @@ public:
     }
     virtual ~ODataEntityInterface() {}
     virtual QList<ODataEntityController *> GetEntityControllers() const = 0;
+    virtual QList<ODataEntitySet *> getEntitySets() const = 0;
 
 };
 

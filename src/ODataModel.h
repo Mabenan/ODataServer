@@ -5,20 +5,25 @@
 #include <QObject>
 #include <QMap>
 #include <QString>
+#include "ODataServiceDocument.h"
 
-class ODataEntityController;
-
+#include "ODataEntitySet.h"
 class ODATASERVER_EXPORT ODataModel : public QObject
 {
     Q_OBJECT
 private:
-QMap<QString, ODataEntityController *> entities;
+QMap<QString,  ODataEntitySet *> entitySets;
+QString host;
+QString base;
 public:
 
-    ODataModel(QObject * parent = nullptr);
+    ODataModel(QString host, QString base,QObject * parent = nullptr);
 
-    QMap<QString, ODataEntityController *> getEntities();
+    QMap<QString,  ODataEntitySet *> getEntitySets();
+
+    ODataServiceDocument * getServiceDocument();
 
 };
 
 #endif // !ODATA_MODEL_H
+

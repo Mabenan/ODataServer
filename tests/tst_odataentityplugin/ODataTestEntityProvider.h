@@ -19,6 +19,7 @@ private:
     // ODataEntityInterface interface
 public:
     QList<ODataEntityController *> GetEntityControllers() const;
+    QList<ODataEntitySet *> getEntitySets() const;
 };
 
 #endif // LISTCOMMANDSCOMMAND_H
