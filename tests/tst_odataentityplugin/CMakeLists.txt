@@ -25,7 +25,7 @@ set_target_properties(${target}
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/${target}"
 )
-add_test(NAME ${target} COMMAND ${target})
+add_unit_test(${target})
 add_custom_command(TARGET ${target} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:ODataServer> ${CMAKE_BINARY_DIR}/bin/${target}
 )
