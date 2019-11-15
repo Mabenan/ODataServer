@@ -16,8 +16,5 @@ script:
   - mkdir build
   - cd build
   - cmake ..
-  - cmake --build .
-  - ls lib
-  - ls bin
-  - cp -r lib bin/plugins
+  - make
   - make test
