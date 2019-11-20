@@ -18,6 +18,7 @@ QMap<QString, ODataEntitySet *> ODataModel::getEntitySets() {
 		pluginsDir.cd("plugins");
 		entryList.append(pluginsDir.entryList(QDir::Files));
 		for (QString &fileName : entryList) {
+			qDebug() << &fileName;
 			QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
 			QObject *plugin = loader.instance();
 			auto entityInterface = qobject_cast<ODataEntityInterface *>(plugin);
