@@ -31,6 +31,8 @@ QMap<QString, ODataEntitySet *> ODataModel::getEntitySets() {
 
 					this->entitySets.insert(controller->getEntitySet()->getName(), controller->getEntitySet());
 				}
+			}else{
+				qDebug() << loader.errorString();
 			}
 		}
 	}
