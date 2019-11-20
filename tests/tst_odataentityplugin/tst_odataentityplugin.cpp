@@ -24,6 +24,7 @@ private slots:
         char *args;
         int argc = 0;
         this->a = new QCoreApplication(argc, &args);
+        qDebug() << this->a->applicationDirPath();
     }
     void addsAllEntitiesOfPlugins();
     void returnServiceDocumentforAllEntities();
