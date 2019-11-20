@@ -1,3 +1,16 @@
 {
-    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools"
+    "files.associations": {
+        "qurlquery": "cpp",
+        "array": "cpp",
+        "future": "cpp",
+        "istream": "cpp",
+        "memory": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "variant": "cpp",
+        "xlocnum": "cpp",
+        "*.tcc": "cpp",
+        "functional": "cpp"
+    }
 }

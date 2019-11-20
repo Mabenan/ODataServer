@@ -15,9 +15,6 @@ script:
   - qmake --version
   - mkdir build
   - cd build
-  - cmake ..
-  - cmake --build .
-  - ls lib
-  - ls bin
-  - cp -r lib bin/plugins
+  - cmake .. -DRUN_TESTS=$RUN_TESTS
+  - make
   - make test
