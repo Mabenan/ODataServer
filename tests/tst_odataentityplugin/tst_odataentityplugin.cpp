@@ -46,6 +46,7 @@ void ODataEntityPluginTest::addsAllEntitiesOfPlugins()
     ODataModel * model = new ODataModel("https://localhost:8000/", "/odata/");
     auto entities = model->getEntitySets();
 
+    QCOMPARE(entities.count(), 2);
     QVERIFY(entities.contains("TestEntitySet"));
     QVERIFY(entities["TestEntitySet"]->getName() == "TestEntitySet");
 
@@ -56,6 +57,7 @@ void ODataEntityPluginTest::returnServiceDocumentforAllEntities()
     ODataRequestHandler * handler = new ODataRequestHandler("https://localhost:8000", "/odata/");
     QVariant result = handler->handleRequest(QUrl("https://localhost:8000/odata/"), QUrlQuery());
     QCOMPARE(result.toJsonObject()["@context"].toString(), "https://localhost:8000/odata/$metadata");
+    QCOMPARE(result.toJsonObject()["value"].toArray().count(), 2);
     QCOMPARE(result.toJsonObject()["value"].toArray()[0].toObject()["name"], "TestEntity2");
     QCOMPARE(result.toJsonObject()["value"].toArray()[0].toObject()["kind"], "EntitySet");
     QCOMPARE(result.toJsonObject()["value"].toArray()[0].toObject()["title"], "Test Entity 2");
