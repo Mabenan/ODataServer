@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
+add_subdirectory("tst_odataentityplugin_plugin_lib")
 set(target "ODataEntityPluginTest")
 add_definitions(-DODATAENTITY_PLUGIN_TEST)
 enable_testing()
@@ -35,4 +36,4 @@ add_custom_command(TARGET ${target} POST_BUILD
      else()
     set_property(TEST ${target} PROPERTY ENVIRONMENT "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${CMAKE_BINARY_DIR}/bin:${CMAKE_BINARY_DIR}/lib" )
      endif()
-target_link_libraries(${target} ODataServer)
+target_link_libraries(${target} ODataServer ODataServerEntityPlugin_TEST_lib)

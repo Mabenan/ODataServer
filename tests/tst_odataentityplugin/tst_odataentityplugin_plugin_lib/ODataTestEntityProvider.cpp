@@ -1,9 +1,9 @@
-#include "ODataTestEntityProvider.h"
-#include "ODataTestEntity.h"
-#include "odatatestcontroller1.h"
-#include "odatatestcontroller2.h"
-#include "ODataTestEntitySet.h"
-#include "ODataTestEntitySet2.h"
+#include <odatatestcontroller1.h>
+#include <odatatestcontroller2.h>
+#include <ODataTestEntity.h>
+#include <ODataTestEntityProvider.h>
+#include <ODataTestEntitySet.h>
+#include <ODataTestEntitySet2.h>
 ODataTestEntityProvider::ODataTestEntityProvider(QObject *parent) : ODataEntityInterface(parent)
 {
 

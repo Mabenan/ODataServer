@@ -1,4 +1,4 @@
-#include "ODataTestEntity.h"
+#include <ODataTestEntity.h>
 
 ODataTestEntity::ODataTestEntity(QObject * parent) : ODataEntity(parent) {
     this->name = "TestEntity";

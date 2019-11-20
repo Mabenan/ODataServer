@@ -1,5 +1,5 @@
-#include "odatatestcontroller2.h"
-#include "ODataTestEntitySet2.h"
+#include <odatatestcontroller2.h>
+#include <ODataTestEntitySet2.h>
 
 ODataTestController2::ODataTestController2()
 {
