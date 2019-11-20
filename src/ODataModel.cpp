@@ -14,9 +14,10 @@ ODataModel::ODataModel(QString host, QString base, QObject *parent) :
 QMap<QString, ODataEntitySet *> ODataModel::getEntitySets() {
 	if (this->entitySets.count() == 0) {
 		QDir pluginsDir = QDir(QCoreApplication::applicationDirPath());
+		QStringList entryList = pluginsDir.entryList(QDir::Files);
 		pluginsDir.cd("plugins");
-		const auto entryList = pluginsDir.entryList(QDir::Files);
-		for (const QString &fileName : entryList) {
+		entryList.append(pluginsDir.entryList(QDir::Files));
+		for (QString &fileName : entryList) {
 			QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
 			QObject *plugin = loader.instance();
 			auto entityInterface = qobject_cast<ODataEntityInterface *>(plugin);
