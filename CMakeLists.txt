@@ -16,9 +16,13 @@ add_subdirectory(src)
 add_subdirectory(tests)
 get_property(UNIT_TEST_TARGETS_L GLOBAL PROPERTY UNIT_TEST_TARGETS)
 message(${UNIT_TEST_TARGETS_L})
+option(RUN_TESTS "Build Desktop App" ON)
+
+if(RUN_TESTS)
 add_custom_target( all_tests ALL DEPENDS ${UNIT_TEST_TARGETS_L} )
 add_custom_command(TARGET "all_tests"
                    COMMENT "Run tests"
                    POST_BUILD COMMAND ctest --verbose
                    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
+endif()
