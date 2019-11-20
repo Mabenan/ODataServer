@@ -15,6 +15,6 @@ script:
   - qmake --version
   - mkdir build
   - cd build
-  - cmake .. -DRUN_TESTS=OFF
+  - cmake .. -DRUN_TESTS=$RUN_TESTS
   - make
   - make test
