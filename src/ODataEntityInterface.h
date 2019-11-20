@@ -28,6 +28,6 @@ public:
 
 };
 
-Q_DECLARE_INTERFACE(ODataEntityInterface, ODataEntityInterface_iid)
+Q_DECLARE_INTERFACE(ODataEntityInterface, "com.odataserver.ODataEntityInterface")
 
 #endif // !ODATA_ENTITY_INTERFACE_H

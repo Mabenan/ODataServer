@@ -6,7 +6,7 @@
 class ODataTestEntityProvider : public ODataEntityInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID ODataEntityInterface_iid FILE "ODataTestEntityProvider.json")
+    Q_PLUGIN_METADATA(IID "com.odataserver.ODataEntityInterface" FILE "ODataTestEntityProvider.json")
     Q_INTERFACES(ODataEntityInterface)
 
 public:
