@@ -4,6 +4,7 @@
 #include <QPluginLoader>
 #include <QCoreApplication>
 #include <QDir>
+#include <QDebug>
 #include "ODataEntitySet.h"
 ODataModel::ODataModel(QString host, QString base, QObject *parent) :
 		QObject(parent) {
