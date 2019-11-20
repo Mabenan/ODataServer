@@ -1,7 +1,7 @@
 #ifndef ODATATESTCONTROLLER2_H
 #define ODATATESTCONTROLLER2_H
 
-#include <odataentitycontroller.h>
+#include <interface/odataentitycontroller.h>
 class ODataTestController2 : public ODataEntityController
 {
 public:

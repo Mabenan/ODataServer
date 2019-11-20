@@ -1,8 +1,8 @@
 #ifndef ODataTestEntityProvider_H
 #define ODataTestEntityProvider_H
 
-#include <ODataEntityInterface.h>
-#include <ODataEntity.h>
+#include <interface/ODataEntityInterface.h>
+#include <model/ODataEntity.h>
 class ODataTestEntityProvider : public ODataEntityInterface
 {
     Q_OBJECT

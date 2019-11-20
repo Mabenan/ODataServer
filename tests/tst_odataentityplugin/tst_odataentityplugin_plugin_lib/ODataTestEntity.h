@@ -2,7 +2,7 @@
 #define ODATA_ENTITYTEST_H
 
 #include <QObject>
-#include <ODataEntity.h>
+#include <model/ODataEntity.h>
 
 class ODataTestEntity : public ODataEntity
 {

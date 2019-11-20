@@ -1,4 +1,4 @@
-#include "ODataURLParser.h"
+#include <ODataURLParser.h>
 #include <QUrl>
 #include <QDebug>
 

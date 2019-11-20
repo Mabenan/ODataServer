@@ -1,7 +1,7 @@
 #include <QtTest>
 #include <QList>
 #include <QString>
-#include <ODataURLParser.h>
+#include <request/ODataURLParser.h>
 // add necessary includes here
 
 class ODataURLParsingTest : public QObject

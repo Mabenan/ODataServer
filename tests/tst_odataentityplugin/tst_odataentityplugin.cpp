@@ -1,10 +1,10 @@
 #include <QtTest>
 #include <QList>
 #include <QString>
-#include <ODataURLParser.h>
-#include <ODataModel.h>
-#include <ODataEntityInterface.h>
-#include <odatarequesthandler.h>
+#include <request/ODataURLParser.h>
+#include <model/ODataModel.h>
+#include <interface/ODataEntityInterface.h>
+#include <request/odatarequesthandler.h>
 // add necessary includes here
 
 class ODataEntityPluginTest : public QObject

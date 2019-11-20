@@ -1,13 +1,13 @@
 #ifndef ODATA_MODEL_H
 #define ODATA_MODEL_H
 
-#include "ODataServer_global.h"
+#include <model/ODataEntitySet.h>
+#include <ODataServer_global.h>
 #include <QObject>
 #include <QMap>
 #include <QString>
-#include "ODataServiceDocument.h"
+#include <response/ODataServiceDocument.h>
 
-#include "ODataEntitySet.h"
 class ODATASERVER_EXPORT ODataModel : public QObject
 {
     Q_OBJECT

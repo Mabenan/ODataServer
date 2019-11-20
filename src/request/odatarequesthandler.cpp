@@ -1,6 +1,6 @@
-#include "odatarequesthandler.h"
-#include "ODataServiceDocument.h"
-#include "odataentitycontroller.h"
+#include <odatarequesthandler.h>
+#include <ODataServiceDocument.h>
+#include <odataentitycontroller.h>
 ODataRequestHandler::ODataRequestHandler(QString host, QString base,QObject *parent) : QObject(parent)
 {
     this->urlParser = new ODataURLParser(this);

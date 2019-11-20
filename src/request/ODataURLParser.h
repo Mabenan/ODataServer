@@ -2,7 +2,7 @@
 #define ODATAURLPARSER_H
 
 #include <QObject>
-#include "ODataServer_global.h"
+#include <ODataServer_global.h>
 
 class ODATASERVER_EXPORT ODataURLParser : public QObject
 {

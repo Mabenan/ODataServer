@@ -1,12 +1,12 @@
 #ifndef ODATAENTITYCONTROLLER_H
 #define ODATAENTITYCONTROLLER_H
 
-#include "ODataServer_global.h"
+#include <model/ODataEntitySet.h>
+#include <model/ODataModel.h>
+#include <request/ODataFilter.h>
+#include <ODataServer_global.h>
 #include <QObject>
 #include <QUrlQuery>
-#include "ODataModel.h"
-#include "ODataFilter.h"
-#include "ODataEntitySet.h"
 
 class ODATASERVER_EXPORT ODataEntityController : public QObject
 {

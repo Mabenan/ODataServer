@@ -1,7 +1,7 @@
 #ifndef ODATA_SERVICE_DOCUMENT_H
 #define ODATA_SERVICE_DOCUMENT_H
 
-#include "ODataServer_global.h"
+#include <ODataServer_global.h>
 #include <QString>
 #include <QList>
 #include <QJsonDocument>

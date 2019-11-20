@@ -1,7 +1,7 @@
 #ifndef ODATA_ENTITY_H
 #define ODATA_ENTITY_H
 
-#include "ODataServer_global.h"
+#include <ODataServer_global.h>
 #include <QObject>
 
 class ODATASERVER_EXPORT ODataEntity : public QObject

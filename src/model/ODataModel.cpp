@@ -1,11 +1,11 @@
-#include "ODataModel.h"
-#include "ODataEntityInterface.h"
-#include "odataentitycontroller.h"
+#include <interface/odataentitycontroller.h>
+#include <interface/ODataEntityInterface.h>
+#include <model/ODataEntitySet.h>
+#include <model/ODataModel.h>
 #include <QPluginLoader>
 #include <QCoreApplication>
 #include <QDir>
 #include <QDebug>
-#include "ODataEntitySet.h"
 ODataModel::ODataModel(QString host, QString base, QObject *parent) :
 		QObject(parent) {
 	this->host = host;

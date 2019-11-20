@@ -2,12 +2,12 @@
 #define ODATAURLHANDLER_H
 
 #include <QObject>
-#include "ODataServer_global.h"
+#include <ODataServer_global.h>
 #include <QUrl>
 #include <QUrlQuery>
 #include <QVariant>
-#include "ODataModel.h"
-#include "ODataURLParser.h"
+#include <model/ODataModel.h>
+#include <request/ODataURLParser.h>
 
 class ODATASERVER_EXPORT ODataRequestHandler : public QObject
 {

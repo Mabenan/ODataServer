@@ -8,7 +8,7 @@
 #ifndef TESTS_TST_ODATAENTITYPLUGIN_ODATATESTENTITYSET2_H_
 #define TESTS_TST_ODATAENTITYPLUGIN_ODATATESTENTITYSET2_H_
 
-#include <ODataEntitySet.h>
+#include <model/ODataEntitySet.h>
 #include <ODataTestEntity2.h>
 
 class ODataTestEntitySet2: public ODataEntitySet {
