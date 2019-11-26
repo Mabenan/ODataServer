@@ -5,6 +5,7 @@
 #include <model/ODataEntity.h>
 class ODataTestEntityProvider : public ODataEntityInterface
 {
+
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "com.odataserver.ODataEntityInterface" FILE "ODataTestEntityProvider.json")
     Q_INTERFACES(ODataEntityInterface)
@@ -18,8 +19,7 @@ private:
 
     // ODataEntityInterface interface
 public:
-    QList<ODataEntityController *> GetEntityControllers() const;
-    QList<ODataEntitySet *> getEntitySets() const;
+	virtual QList<ODataSchema*> GetSchemas();
 };
 
 #endif // LISTCOMMANDSCOMMAND_H

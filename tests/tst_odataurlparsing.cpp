@@ -1,34 +1,10 @@
-#include <QtTest>
-#include <QList>
-#include <QString>
-#include <request/ODataURLParser.h>
+#include <tst_odataurlparsing.h>
 // add necessary includes here
 
-class ODataURLParsingTest : public QObject
-{
-    Q_OBJECT
-
-private:
-    ODataURLParser * urlParser;
-public:
-    ODataURLParsingTest();
-    ~ODataURLParsingTest();
-
-public:
-private slots:
-    void initTestCase()
-    {
-        this->urlParser = new ODataURLParser(this);
-    }
-    void encodesURLCorrect();
-
-    void cleanupTestCase()
-    {
-    }
-};
 
 ODataURLParsingTest::ODataURLParsingTest()
 {
+	this->urlParser = nullptr;
 }
 
 ODataURLParsingTest::~ODataURLParsingTest()
@@ -50,7 +26,5 @@ void ODataURLParsingTest::encodesURLCorrect()
     QVERIFY(segments.count() == 1);
     QVERIFY(segments.contains("Categories('Smartphone/Tablet')"));
 }
-
-QTEST_APPLESS_MAIN(ODataURLParsingTest)
 
 #include "tst_odataurlparsing.moc"

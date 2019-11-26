@@ -8,6 +8,8 @@
 #include <model/ODataEntitySet.h>
 
 ODataEntitySet::ODataEntitySet(QObject* parent) : QObject(parent) {
+	this->name = "";
+	this->entity = nullptr;
 }
 
 ODataEntitySet::~ODataEntitySet() {
@@ -16,8 +18,4 @@ ODataEntitySet::~ODataEntitySet() {
 
 QString ODataEntitySet::getName() {
 	return this->name;
-}
-
-ODataEntity* ODataEntitySet::getEntity() {
-	 return this->entity;
 }

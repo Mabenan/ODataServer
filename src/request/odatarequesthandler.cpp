@@ -1,6 +1,7 @@
 #include <odatarequesthandler.h>
 #include <ODataServiceDocument.h>
-#include <odataentitycontroller.h>
+#include <response/ODataMetadata.h>
+#include <QVariant>
 ODataRequestHandler::ODataRequestHandler(QString host, QString base,QObject *parent) : QObject(parent)
 {
     this->urlParser = new ODataURLParser(this);
@@ -16,7 +17,8 @@ QVariant ODataRequestHandler::handleRequest(QUrl url, QUrlQuery query)
     	ODataServiceDocument * serviceDoc = this->model->getServiceDocument();
         return serviceDoc->getJson();
     }else if(url.path().toLower() == this->base + "$metadata"){
-        return "";
+        ODataMetadata * metadata = this->model->getMetadata();
+        return QVariant(metadata->getAsXML()->toString());
     }
     else
     {

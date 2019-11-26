@@ -35,7 +35,8 @@ SET(INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} ${SUBDIRS})
 include_directories(${INCLUDE_DIRS} )
 
 find_package(Qt5Core REQUIRED)
-qt5_use_modules(${target} Core)
+find_package(Qt5Xml REQUIRED)
+qt5_use_modules(${target} Core Xml)
 target_include_directories(${target} PUBLIC 
     ${INCLUDE_DIRS}
 )    

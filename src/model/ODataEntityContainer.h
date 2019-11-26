@@ -18,7 +18,7 @@
 
 class ODATASERVER_EXPORT ODataEntityContainer: public QObject {
 
-private:
+public:
 	QMap<QString, ODataEntitySet *> entitySets;
 	QMap<QString, ODataSingleton *> singeltons;
 	QMap<QString, ODataFunction *> functions;

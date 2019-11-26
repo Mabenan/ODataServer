@@ -1,10 +1,10 @@
 #ifndef ODATA_ENTITY_INTERFACE_H
 #define ODATA_ENTITY_INTERFACE_H
 
-#include <interface/odataentitycontroller.h>
 #include <model/ODataEntity.h>
 #include <model/ODataEntitySet.h>
 #include <model/ODataModel.h>
+#include <model/ODataSchema.h>
 #include <request/ODataFilter.h>
 #include <ODataServer_global.h>
 #include <QObject>
@@ -23,8 +23,7 @@ public:
 
     }
     virtual ~ODataEntityInterface() {}
-    virtual QList<ODataEntityController *> GetEntityControllers() const = 0;
-    virtual QList<ODataEntitySet *> getEntitySets() const = 0;
+    virtual QList<ODataSchema *> GetSchemas() = 0;
 
 };
 
