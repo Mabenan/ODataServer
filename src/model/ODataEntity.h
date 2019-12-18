@@ -4,7 +4,7 @@
 #include <ODataServer_global.h>
 #include <QObject>
 #include <model/ODataProperty.h>
-#include <QUrlQuery.h>
+#include <QUrlQuery>
 #include <QMap>
 #include <QVariant>
 class ODATASERVER_EXPORT ODataEntity : public QObject
