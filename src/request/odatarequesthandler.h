@@ -20,7 +20,7 @@ private:
 public:
     explicit ODataRequestHandler(QString host, QString base,QObject *parent = nullptr);
 
-    QVariant handleRequest(QUrl url, QUrlQuery query);
+    QVariant handleRequest(QUrl url, QUrlQuery query, QVariant body);
 
 signals:
 
