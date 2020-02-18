@@ -7,7 +7,7 @@
 
 #include <ODataTestEntitySet2.h>
 
-void ODataTestEntitySet2::getSet(QMap<QString, ODataFilter> filter,
+void ODataTestEntitySet2::getSet(
 		QUrlQuery query) {
 
 }

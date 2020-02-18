@@ -30,6 +30,8 @@ public:
     virtual void update() const = 0;
     virtual void deleteEntity() const = 0;
     virtual void insert() const = 0;
+
+    QJsonObject toJSON();
 };
 
 #endif // !ODATA_ENTITY_H

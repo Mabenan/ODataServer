@@ -23,7 +23,7 @@ public:
 		// TODO Auto-generated destructor stub
 	}
 
-	virtual void getSet(QMap<QString, ODataFilter> filter,
+	virtual void getSet(
 			QUrlQuery query);
 	virtual void updateSet() const;
 	virtual void deleteSet() const;

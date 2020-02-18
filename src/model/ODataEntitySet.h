@@ -28,13 +28,15 @@ public:
 	virtual ~ODataEntitySet();
 	QString getName();
     virtual ODataEntity * get(QMap<QString, QVariant> keys, QUrlQuery query)  = 0;
-    virtual void getSet(QMap<QString, ODataFilter> filter, QUrlQuery query)  = 0;
+    virtual void getSet(QUrlQuery query)  = 0;
     virtual void updateSet() const = 0;
     virtual void deleteSet() const = 0;
     virtual void insertSet() const = 0;
     ODataEntity * getDefaultEntity(){
     	return this->entity;
     }
+
+    QJsonObject toJSON();
 };
 
 #endif /* SRC_ODATAENTITYSET_H_ */

@@ -27,7 +27,7 @@ TEST(ODataEntityPluginTest, returnServiceDocumentforAllEntities) {
 	QCoreApplication * a = new QCoreApplication(argc, &args);
 	ODataRequestHandler * handler = new ODataRequestHandler("https://localhost:8000", "/odata/");
 	QVariant result = handler->handleRequest(
-			QUrl("https://localhost:8000/odata/"), QUrlQuery());
+			QUrl("https://localhost:8000/odata/"), QUrlQuery(), 0, ODataRequestHandler::Method::GET);
 	 EXPECT_EQ(result.toJsonObject()["@context"].toString(),
 			"https://localhost:8000/odata/$metadata");
 	 EXPECT_EQ(result.toJsonObject()["value"].toArray().count(), 2);
@@ -57,7 +57,7 @@ TEST(ODataEntityPluginTest, returnMetadata) {
 	QCoreApplication * a = new QCoreApplication(argc, &args);
 	ODataRequestHandler * handler = new ODataRequestHandler("https://localhost:8000", "/odata/");
 	QVariant result = handler->handleRequest(
-			QUrl("https://localhost:8000/odata/$metadata"), QUrlQuery());
+			QUrl("https://localhost:8000/odata/$metadata"), QUrlQuery(), 0, ODataRequestHandler::Method::GET);
 
 	QDomDocument *dom = new QDomDocument("metadata");
 

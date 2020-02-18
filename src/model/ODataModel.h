@@ -24,6 +24,8 @@ public:
     ODataModel(QString host, QString base,QObject * parent = nullptr);
 
     QMap<QString,  ODataEntitySet *> getEntitySets();
+    QMap<QString, ODataFunction *> getFunctions();
+    QMap<QString, ODataAction *> getActions();
 
     ODataServiceDocument * getServiceDocument();
     ODataMetadata * getMetadata();

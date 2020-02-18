@@ -31,7 +31,7 @@ FOREACH(srcfile ${SRC})
 message(${srcfile})
 endforeach()
 add_library(${target} SHARED ${SRC})
-SET(INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} ${SUBDIRS})
+SET(INCLUDE_DIRS $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> ${SUBDIRS})
 include_directories(${INCLUDE_DIRS} )
 
 find_package(Qt5Core REQUIRED)
@@ -44,3 +44,6 @@ set_target_properties(${target} PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES ${INCLUDE_DIRS}
     )
 export(TARGETS ${target} FILE ${target}-exports.cmake EXPORT_LINK_INTERFACE_LIBRARIES)
+install(TARGETS ${target} EXPORT ${target} DESTINATION "${LIB_FOLDER}")
+install(EXPORT ${target} DESTINATION "${LIB_FOLDER}")
+install(FILES ${HEADER} DESTINATION "${INCLUDE_FOLDER}")

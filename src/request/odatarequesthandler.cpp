@@ -12,7 +12,7 @@ ODataRequestHandler::ODataRequestHandler(QString host, QString base,QObject *par
     this->model = new ODataModel(host,base,this);
 }
 
-QVariant ODataRequestHandler::handleRequest(QUrl url, QUrlQuery query, QVariant body)
+QVariant ODataRequestHandler::handleRequest(QUrl url, QUrlQuery query, QVariant body, Method method)
 {
     if (url.path() == this->base)
     {
@@ -25,7 +25,7 @@ QVariant ODataRequestHandler::handleRequest(QUrl url, QUrlQuery query, QVariant 
     else
     {
         QStringList urlSegments = this->urlParser->splitUpURL(url);
-        ODataURLWalk * urlWalk = new ODataURLWalk(this->model, url, query, body,this);
+        ODataURLWalk * urlWalk = new ODataURLWalk(this->model, url, query, body, method,this);
         QVariant result = urlWalk->walkURL(urlSegments);
         return result;
     }

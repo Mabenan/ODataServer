@@ -70,3 +70,29 @@ ODataMetadata* ODataModel::getMetadata() {
 	this->ensureSchemas();
 	return new ODataMetadata(this->schemas);
 }
+
+QMap<QString, ODataAction * > ODataModel::getActions(){
+	this->ensureSchemas();
+	QMap<QString, ODataAction * > actions;
+	foreach(QString key, this->schemas.keys()){
+		QString entityPrefix = this->schemas[key]->getNamespace() + ".";
+		foreach(QString key2, this->schemas[key]->getEntityContainer()->actionImports.keys()){
+			actions.insert(entityPrefix + key2,this->schemas[key]->getEntityContainer()->actionImports[key2]);
+		}
+	}
+	return actions;
+
+}
+
+QMap<QString, ODataFunction * > ODataModel::getFunctions(){
+	this->ensureSchemas();
+	QMap<QString, ODataFunction * > functions;
+	foreach(QString key, this->schemas.keys()){
+		QString entityPrefix = this->schemas[key]->getNamespace() + ".";
+		foreach(QString key2, this->schemas[key]->getEntityContainer()->functions.keys()){
+			functions.insert(entityPrefix + key2,this->schemas[key]->getEntityContainer()->functions[key2]);
+		}
+	}
+	return functions;
+
+}

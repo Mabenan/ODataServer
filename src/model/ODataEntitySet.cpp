@@ -6,6 +6,9 @@
  */
 
 #include <model/ODataEntitySet.h>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
 
 ODataEntitySet::ODataEntitySet(QObject* parent) : QObject(parent) {
 	this->name = "";
@@ -18,4 +21,17 @@ ODataEntitySet::~ODataEntitySet() {
 
 QString ODataEntitySet::getName() {
 	return this->name;
+}
+
+QJsonObject ODataEntitySet::toJSON() {
+
+	QJsonObject jsonObject;
+	QJsonArray value;
+	for(ODataEntity * subEntity : this->entities){
+		QJsonObject subJsonObject = subEntity->toJSON();
+		value.append(subJsonObject);
+	}
+	jsonObject.insert("value", value);
+	return jsonObject;
+
 }
