@@ -19,11 +19,6 @@ project("ODataServer" LANGUAGES CXX)
 
 add_subdirectory(src)
 add_subdirectory(tests)
-install(TARGETS ODataServer EXPORT ${CMAKE_PROJECT_NAME} 
-LIBRARY DESTINATION "${LIB_FOLDER}"
-    ARCHIVE DESTINATION "${LIB_FOLDER}"
-    RUNTIME DESTINATION "${EXEC_FOLDER}"
-    INCLUDES DESTINATION "${INCLUDE_FOLDER}")
   export(PACKAGE ${CMAKE_PROJECT_NAME})
 
 include(CMakePackageConfigHelpers)
