@@ -43,7 +43,4 @@ target_include_directories(${target} PUBLIC
 set_target_properties(${target} PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES ${INCLUDE_DIRS}
     )
-export(TARGETS ${target} FILE ${target}-exports.cmake EXPORT_LINK_INTERFACE_LIBRARIES)
-install(TARGETS ${target} EXPORT ${target} DESTINATION "${LIB_FOLDER}")
-install(EXPORT ${target} DESTINATION "${LIB_FOLDER}")
 install(FILES ${HEADER} DESTINATION "${INCLUDE_FOLDER}")
