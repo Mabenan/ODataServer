@@ -13,12 +13,39 @@ file(GLOB HEADER
     "*.h"
     "*.hpp"
 )
+MACRO(SUBDIRLIST result curdir)
+  FILE(GLOB children RELATIVE ${curdir} ${curdir}/*)
+  SET(dirlist "")
+  FOREACH(child ${children})
+    IF(IS_DIRECTORY ${curdir}/${child})
+      LIST(APPEND dirlist ${curdir}/${child})
+    ENDIF()
+  ENDFOREACH()
+  SET(${result} ${dirlist})
+ENDMACRO()
+SUBDIRLIST(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR})
+FOREACH(subdir ${SUBDIRS})
+  ADD_SUBDIRECTORY(${subdir})
+ENDFOREACH()
+FOREACH(srcfile ${SRC})
+message(${srcfile})
+endforeach()
 add_library(${target} SHARED ${SRC})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+SET(INCLUDE_DIRS $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> ${SUBDIRS})
+include_directories(${INCLUDE_DIRS} )
 
 find_package(Qt5Core REQUIRED)
-qt5_use_modules(${target} Core)
+find_package(Qt5Xml REQUIRED)
+qt5_use_modules(${target} Core Xml)
 target_include_directories(${target} PUBLIC 
-    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${INCLUDE_DIRS}
 )    
-export(TARGETS ${target} FILE ${target}-exports.cmake EXPORT_LINK_INTERFACE_LIBRARIES)
+set_target_properties(${target} PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${INCLUDE_DIRS}
+    )
+install(FILES ${HEADER} DESTINATION "${INCLUDE_FOLDER}")
+install(TARGETS ODataServer EXPORT ${CMAKE_PROJECT_NAME} 
+LIBRARY DESTINATION "${LIB_FOLDER}"
+    ARCHIVE DESTINATION "${LIB_FOLDER}"
+    RUNTIME DESTINATION "${EXEC_FOLDER}"
+    INCLUDES DESTINATION "${INCLUDE_FOLDER}")

@@ -1,2 +1,50 @@
-add_subdirectory(tst_odataentityplugin)
-add_subdirectory(tst_odataurlparsing)
+cmake_minimum_required(VERSION 3.5)
+
+add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest")
+mark_as_advanced(
+    BUILD_GMOCK BUILD_GTEST BUILD_SHARED_LIBS
+    gmock_build_tests gtest_build_samples gtest_build_tests
+    gtest_disable_pthreads gtest_force_shared_crt gtest_hide_internal_symbols
+)
+set_target_properties(gtest PROPERTIES FOLDER extern)
+set_target_properties(gtest_main PROPERTIES FOLDER extern)
+set_target_properties(gmock PROPERTIES FOLDER extern)
+set_target_properties(gmock_main PROPERTIES FOLDER extern)
+add_subdirectory("tst_odataentityplugin_plugin_lib")
+set(target "ODataServerTest")
+add_definitions(-DODATAENTITY_PLUGIN_TEST)
+enable_testing()
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+file(GLOB SRC
+    "*.cpp"
+)
+file(GLOB HEADER
+    "*.h"
+    "*.hpp"
+)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+  add_executable(${target} ${SRC} ${HEADER})
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Xml REQUIRED)
+qt5_use_modules(${target} Core Xml)
+
+set_target_properties(${target}
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)    
+gtest_discover_tests(${target})    
+add_custom_command(TARGET ${target} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:ODataServer> ${CMAKE_BINARY_DIR}/bin )
+    if(WIN32)
+    STRING(REPLACE "\\;" ";" PATH_STRING "$ENV{PATH}${CMAKE_BINARY_DIR}/bin;${CMAKE_BINARY_DIR}/lib")
+    STRING(REPLACE ";" "\\;" PATH_STRING "${PATH_STRING}")
+#    set_property(TEST ${target} PROPERTY ENVIRONMENT "PATH=${PATH_STRING}" )
+     else()
+#    set_property(TEST ${target} PROPERTY ENVIRONMENT "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${CMAKE_BINARY_DIR}/bin:${CMAKE_BINARY_DIR}/lib" )
+     endif()
+target_link_libraries(${target} ODataServer ODataServerEntityPlugin_TEST_lib gtest gmock gtest_main)

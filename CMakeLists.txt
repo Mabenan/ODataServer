@@ -2,27 +2,54 @@ cmake_minimum_required(VERSION 3.5)
 
 enable_testing()
 
-project("ODataServer" LANGUAGES CXX)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(EXEC_FOLDER "bin")
 
-function(add_unit_test target)
-get_property(UNIT_TEST_TARGETS_L GLOBAL PROPERTY UNIT_TEST_TARGETS)
-    set_property(GLOBAL PROPERTY UNIT_TEST_TARGETS ${UNIT_TEST_TARGETS_L} ${target})
-add_test(NAME ${target} COMMAND ${target} -v2 WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${target})
-endfunction()
+if(WIN32)
+set(LIB_FOLDER "bin")
+else()
+set(LIB_FOLDER "lib")
+endif()
+set(INCLUDE_FOLDER "include")
+set(PLUGIN_FOLDER "${EXEC_FOLDER}/plugins")
+    include(GoogleTest)
+project("ODataServer" LANGUAGES CXX)
+
 add_subdirectory(src)
 add_subdirectory(tests)
-get_property(UNIT_TEST_TARGETS_L GLOBAL PROPERTY UNIT_TEST_TARGETS)
-message(${UNIT_TEST_TARGETS_L})
-option(RUN_TESTS "Build Desktop App" ON)
+  export(PACKAGE ${CMAKE_PROJECT_NAME})
 
-if(RUN_TESTS)
-add_custom_target( all_tests ALL DEPENDS ${UNIT_TEST_TARGETS_L} )
-add_custom_command(TARGET "all_tests"
-                   COMMENT "Run tests"
-                   POST_BUILD COMMAND ctest --verbose
-                   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+include(CMakePackageConfigHelpers)
+configure_package_config_file( 
+  "Config.cmake.in" 
+  "${CMAKE_PROJECT_NAME}Config.cmake"
+  INSTALL_DESTINATION ${LIB_FOLDER}
+  PATH_VARS
+    LIB_FOLDER
+  )
+
+write_basic_package_version_file(
+  ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}ConfigVersion.cmake
+  VERSION 1.0.0
+  COMPATIBILITY SameMajorVersion
+  )
+  
+  export(EXPORT ${CMAKE_PROJECT_NAME}
+  FILE "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.cmake"
 )
-endif()
+configure_file(${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake
+  "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.cmake"
+)
+
+### Install Config and ConfigVersion files
+install(
+  FILES "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}ConfigVersion.cmake"
+  DESTINATION "${LIB_FOLDER}"
+  )
+install(
+  EXPORT ${CMAKE_PROJECT_NAME}
+  DESTINATION ${LIB_FOLDER}
+  )
