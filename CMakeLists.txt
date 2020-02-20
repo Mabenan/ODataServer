@@ -17,37 +17,37 @@ project("ODataServer" LANGUAGES CXX)
 
 add_subdirectory(src)
 add_subdirectory(tests)
-  export(PACKAGE ${CMAKE_PROJECT_NAME})
+  export(PACKAGE ODataServer)
 
 include(CMakePackageConfigHelpers)
 configure_package_config_file( 
   "Config.cmake.in" 
-  "${CMAKE_PROJECT_NAME}Config.cmake"
+  "ODataServerConfig.cmake"
   INSTALL_DESTINATION ${LIB_FOLDER}
   PATH_VARS
     LIB_FOLDER
   )
 
 write_basic_package_version_file(
-  ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}ConfigVersion.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/ODataServerConfigVersion.cmake
   VERSION 1.0.0
   COMPATIBILITY SameMajorVersion
   )
   
-  export(EXPORT ${CMAKE_PROJECT_NAME}
-  FILE "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.cmake"
+  export(EXPORT ODataServer
+  FILE "${CMAKE_CURRENT_BINARY_DIR}/ODataServer.cmake"
 )
-configure_file(${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake
-  "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.cmake"
+configure_file(${CMAKE_CURRENT_BINARY_DIR}/ODataServerConfig.cmake
+  "${CMAKE_CURRENT_BINARY_DIR}/ODataServer.cmake"
 )
 
 ### Install Config and ConfigVersion files
 install(
-  FILES "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}ConfigVersion.cmake"
+  FILES "${CMAKE_CURRENT_BINARY_DIR}/ODataServerConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/ODataServerConfigVersion.cmake"
   DESTINATION "${LIB_FOLDER}"
   )
 install(
-  EXPORT ${CMAKE_PROJECT_NAME}
+  EXPORT ODataServer
   DESTINATION ${LIB_FOLDER}
   )
