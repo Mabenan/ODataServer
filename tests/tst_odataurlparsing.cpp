@@ -1,5 +1,5 @@
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 #include <QList>
 #include <QString>
 #include <QUrl>

@@ -30,5 +30,4 @@ set_target_properties(${target}
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
-export(TARGETS ${target} FILE ${target}-exports.cmake EXPORT_LINK_INTERFACE_LIBRARIES)
 target_link_libraries(${target} ODataServer)

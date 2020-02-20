@@ -1,15 +1,34 @@
 cmake_minimum_required(VERSION 3.5)
 
-add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest")
+enable_testing()
+configure_file(gtest/CMakeLists.txt.in googletest-download/CMakeLists.txt)
+execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+  RESULT_VARIABLE result
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
+if(result)
+  message(FATAL_ERROR "CMake step for googletest failed: ${result}")
+endif()
+execute_process(COMMAND ${CMAKE_COMMAND} --build .
+  RESULT_VARIABLE result
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
+if(result)
+  message(FATAL_ERROR "Build step for googletest failed: ${result}")
+endif()
+# Prevent overriding the parent project's compiler/linker
+# settings on Windows
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+# Add googletest directly to our build. This defines
+# the gtest and gtest_main targets.
+add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
+                 ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
+                 EXCLUDE_FROM_ALL)
+include(GoogleTest)
 mark_as_advanced(
     BUILD_GMOCK BUILD_GTEST BUILD_SHARED_LIBS
     gmock_build_tests gtest_build_samples gtest_build_tests
     gtest_disable_pthreads gtest_force_shared_crt gtest_hide_internal_symbols
 )
-set_target_properties(gtest PROPERTIES FOLDER extern)
-set_target_properties(gtest_main PROPERTIES FOLDER extern)
-set_target_properties(gmock PROPERTIES FOLDER extern)
-set_target_properties(gmock_main PROPERTIES FOLDER extern)
 add_subdirectory("tst_odataentityplugin_plugin_lib")
 set(target "ODataServerTest")
 add_definitions(-DODATAENTITY_PLUGIN_TEST)
@@ -38,6 +57,7 @@ set_target_properties(${target}
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )    
 gtest_discover_tests(${target})    
+add_test(${target} COMMAND ${CMAKE_BINARY_DIR}/bin/${target})
 add_custom_command(TARGET ${target} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:ODataServer> ${CMAKE_BINARY_DIR}/bin )
     if(WIN32)
@@ -47,4 +67,4 @@ add_custom_command(TARGET ${target} POST_BUILD
      else()
 #    set_property(TEST ${target} PROPERTY ENVIRONMENT "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${CMAKE_BINARY_DIR}/bin:${CMAKE_BINARY_DIR}/lib" )
      endif()
-target_link_libraries(${target} ODataServer ODataServerEntityPlugin_TEST_lib gtest gmock gtest_main)
+target_link_libraries(${target} ODataServer ODataServerEntityPlugin_TEST_lib gtest_main)
