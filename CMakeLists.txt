@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 if(NOT DEFINED ${CMAKE_PROJECT_NAME})
 project(${target} LANGUAGES CXX)
+include(GoogleTest.cmake)
 endif()
 
 
