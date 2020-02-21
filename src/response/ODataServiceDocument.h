@@ -55,7 +55,7 @@ public:
         QJsonObject json = QJsonObject();
         json["@context"] = QJsonValue(context);
         QJsonArray jsonValue;
-        foreach(ODataServiceDocumentEntry * entry, this->value){
+        for(ODataServiceDocumentEntry * entry : this->value){
             jsonValue.push_back(QJsonValue(entry->getJson()));
         }
         json["value"] = jsonValue;

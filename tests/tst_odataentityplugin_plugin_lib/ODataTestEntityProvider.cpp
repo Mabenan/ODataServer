@@ -21,5 +21,8 @@ QList<ODataSchema*> ODataTestEntityProvider::GetSchemas() {
 	ODataSchema * schema2 = new ODataSchema("Test2", entityContainer2);
 	entityContainer2->entitySets.insert("TestEntity2Set", new ODataTestEntitySet2());
 
-	return QList<ODataSchema*>({schema1,schema2});
+	QList<ODataSchema *> schemas;
+	schemas.append(schema1);
+	schemas.append(schema2);
+	return schemas;
 }

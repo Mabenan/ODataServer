@@ -16,13 +16,13 @@ QDomDocument * ODataMetadata::getAsXML() {
 
 	QDomElement dataServices = doc->createElement("edmx:DataServices");
 
-	foreach(QString _namespace, this->schemas.keys()){
+	for(QString _namespace : this->schemas.keys()){
 		QDomElement schema = doc->createElementNS("http://docs.oasis-open.org/odata/ns/edm", "Schema");
 		schema.setAttribute("Namespace", _namespace);
 	    ODataEntityContainer * entityContainer =  this->schemas[_namespace]->getEntityContainer();
 	    QDomElement eCElement = doc->createElement("EntityContainer");
 	    eCElement.setAttribute("Name", "Container");
-	    foreach(QString entitySetName, entityContainer->entitySets.keys()){
+	    for(QString entitySetName : entityContainer->entitySets.keys()){
 	    	ODataEntitySet * entitySet = entityContainer->entitySets[entitySetName];
 	    	ODataEntity * entity = entitySet->getDefaultEntity();
 
@@ -34,7 +34,7 @@ QDomDocument * ODataMetadata::getAsXML() {
 	    	QDomElement entityElement = doc->createElement("EntityType");
 	    	entityElement.setAttribute("Name", entity->getName());
 	    	QDomElement entityKeyElement = doc->createElement("Key");
-	    	foreach(QString property, entity->property.keys()){
+	    	for(QString property : entity->property.keys()){
 	    		QDomElement entityPropElement = doc->createElement("Property");
 	    		entityPropElement.setAttribute("Name", property);
 	    		entityPropElement.setAttribute("Type", entity->property[property]->type);

@@ -101,6 +101,7 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 					entitySet->getSet(this->query);
 					this->currentResult = entitySet->toJSON();
 				}
+				break;
 			case ODataRequestHandler::Method::POST:
 				entityObject = entitySet->getDefaultEntity();
 				entityObject->data = bodyJSON.toVariantMap();

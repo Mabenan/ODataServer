@@ -25,7 +25,7 @@ void ODataModel::ensureSchemas() {
 			if (entityInterface) {
 				QList<ODataSchema *> schemas =
 						entityInterface->GetSchemas();
-				foreach (ODataSchema * schema, schemas)
+				for(ODataSchema * schema: schemas)
 				{
 
 					this->schemas.insert( schema->getNamespace(),
@@ -41,9 +41,9 @@ void ODataModel::ensureSchemas() {
 QMap<QString, ODataEntitySet *> ODataModel::getEntitySets() {
 	this->ensureSchemas();
 	QMap<QString, ODataEntitySet * > entitySets;
-	foreach(QString key, this->schemas.keys()){
+	for(QString key : this->schemas.keys()){
 		QString entityPrefix = this->schemas[key]->getNamespace() + ".";
-		foreach(QString key2, this->schemas[key]->getEntityContainer()->entitySets.keys()){
+		for(QString key2 : this->schemas[key]->getEntityContainer()->entitySets.keys()){
 			entitySets.insert(entityPrefix + key2,this->schemas[key]->getEntityContainer()->entitySets[key2]);
 		}
 	}
@@ -54,7 +54,7 @@ ODataServiceDocument* ODataModel::getServiceDocument() {
 	ODataServiceDocument * serviceDoc = new ODataServiceDocument(this);
 	serviceDoc->context = this->host + this->base + "$metadata";
 	QMap<QString, ODataEntitySet *> map = this->getEntitySets();
-	foreach(QString key, map.keys())
+	for(QString key : map.keys())
 	{
 		ODataServiceDocumentEntry * docEntry = new ODataServiceDocumentEntry();
 		docEntry->name = map[key]->getDefaultEntity()->getName();
@@ -74,9 +74,9 @@ ODataMetadata* ODataModel::getMetadata() {
 QMap<QString, ODataAction * > ODataModel::getActions(){
 	this->ensureSchemas();
 	QMap<QString, ODataAction * > actions;
-	foreach(QString key, this->schemas.keys()){
+	for(QString key : this->schemas.keys()){
 		QString entityPrefix = this->schemas[key]->getNamespace() + ".";
-		foreach(QString key2, this->schemas[key]->getEntityContainer()->actionImports.keys()){
+		for(QString key2 : this->schemas[key]->getEntityContainer()->actionImports.keys()){
 			actions.insert(entityPrefix + key2,this->schemas[key]->getEntityContainer()->actionImports[key2]);
 		}
 	}
@@ -87,9 +87,9 @@ QMap<QString, ODataAction * > ODataModel::getActions(){
 QMap<QString, ODataFunction * > ODataModel::getFunctions(){
 	this->ensureSchemas();
 	QMap<QString, ODataFunction * > functions;
-	foreach(QString key, this->schemas.keys()){
+	for(QString key : this->schemas.keys()){
 		QString entityPrefix = this->schemas[key]->getNamespace() + ".";
-		foreach(QString key2, this->schemas[key]->getEntityContainer()->functions.keys()){
+		for(QString key2 : this->schemas[key]->getEntityContainer()->functions.keys()){
 			functions.insert(entityPrefix + key2,this->schemas[key]->getEntityContainer()->functions[key2]);
 		}
 	}

@@ -24,12 +24,12 @@ QStringList ODataURLParser::splitUpURL(QUrl url){
     segments.removeAt(0);
     segments.removeAt(0);
     QStringList encodedSegements;
-    foreach (QString segment, segments)
+    for(QString segment : segments)
     {
         QString decodedSegment = QUrl::fromPercentEncoding(segment.toUtf8());
         encodedSegements.push_back(decodedSegment);
     }
-    foreach (QString segment, encodedSegements)
+    for(QString segment : encodedSegements)
     {
         qDebug() << segment;
     }

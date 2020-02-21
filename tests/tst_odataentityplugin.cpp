@@ -22,9 +22,9 @@ TEST(ODataEntityPluginTest, addsAllEntitiesOfPlugins)
 		EXPECT_TRUE(entities.contains("Test.TestEntitySet"));
 		EXPECT_TRUE(entities["Test.TestEntitySet"]->getName() == "TestEntitySet");
 	}
-	catch (std::exception ex)
+	catch (std::exception * ex)
 	{
-		std::cout << ex.what();
+		std::cout << ex->what();
 	}
 }
 
@@ -59,9 +59,9 @@ TEST(ODataEntityPluginTest, returnServiceDocumentforAllEntities)
 		EXPECT_EQ(result.toJsonObject()["value"].toArray()[0].toObject()["url"],
 				  "Test.TestEntitySet");
 	}
-	catch (std::exception ex)
+	catch (std::exception * ex)
 	{
-		std::cout << ex.what();
+		std::cout << ex->what();
 	}
 }
 
@@ -148,8 +148,8 @@ TEST(ODataEntityPluginTest, returnMetadata)
 		EXPECT_EQ(entitySet.attributes().namedItem("Name").toAttr().value(), "TestEntity2Set");
 		EXPECT_EQ(entitySet.attributes().namedItem("EntityType").toAttr().value(), "Test2.TestEntity2");
 	}
-	catch (std::exception ex)
+	catch (std::exception * ex)
 	{
-		std::cout << ex.what();
+		std::cout << ex->what();
 	}
 }
