@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-if(NOT DEFINED ${CMAKE_PROJECT_NAME})
-message("create project")
+if(NOT CMAKE_PROJECT_NAME)
 project("ODataServer" LANGUAGES CXX)
 include(GoogleTest.cmake)
 endif()
