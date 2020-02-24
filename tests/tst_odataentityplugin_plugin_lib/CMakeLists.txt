@@ -22,7 +22,6 @@ qt5_use_modules(${target} Core Xml)
 target_include_directories(${target} PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR}
 )    
-qt5_use_modules(${target} Core Test)
 
 set_target_properties(${target}
     PROPERTIES
