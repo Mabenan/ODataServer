@@ -32,13 +32,4 @@ set_target_properties(${target}
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )    
 gtest_discover_tests(${target})    
-add_custom_command(TARGET ${target} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:ODataServer> ${CMAKE_BINARY_DIR}/bin )
-    if(WIN32)
-    STRING(REPLACE "\\;" ";" PATH_STRING "$ENV{PATH}${CMAKE_BINARY_DIR}/bin;${CMAKE_BINARY_DIR}/lib")
-    STRING(REPLACE ";" "\\;" PATH_STRING "${PATH_STRING}")
-#    set_property(TEST ${target} PROPERTY ENVIRONMENT "PATH=${PATH_STRING}" )
-     else()
-#    set_property(TEST ${target} PROPERTY ENVIRONMENT "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${CMAKE_BINARY_DIR}/bin:${CMAKE_BINARY_DIR}/lib" )
-     endif()
 target_link_libraries(${target} ODataServer ODataServerEntityPlugin_TEST_lib gtest_main)
