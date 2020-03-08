@@ -21,7 +21,7 @@ QString base;
 void ensureSchemas();
 public:
 
-    ODataModel(QString host, QString base,QObject * parent = nullptr);
+    ODataModel(QString host, QString base, QMap<QString, ODataSchema *> schemas,QObject * parent = nullptr);
 
     QMap<QString,  ODataEntitySet *> getEntitySets();
     QMap<QString, ODataFunction *> getFunctions();

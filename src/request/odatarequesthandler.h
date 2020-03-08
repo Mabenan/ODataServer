@@ -47,7 +47,7 @@ private:
     QString base;
 
 public:
-    explicit ODataRequestHandler(QString host, QString base, QObject *parent = nullptr);
+    explicit ODataRequestHandler(QString host, QString base,QMap<QString, ODataSchema *> schemas, QObject *parent = nullptr);
 
     QVariant handleRequest(QUrl url, QUrlQuery query, QVariant body, Method method);
 

@@ -30,8 +30,11 @@ ENDFOREACH()
 FOREACH(srcfile ${SRC})
 message(${srcfile})
 endforeach()
+FOREACH(subdir ${SUBDIRS})
+LIST( APPEND include_sub_dir_list $<BUILD_INTERFACE:${subdir}>)
+endforeach()
 add_library(${target} SHARED ${SRC})
-SET(INCLUDE_DIRS $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> ${SUBDIRS})
+SET(INCLUDE_DIRS $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> ${include_sub_dir_list})
 include_directories(${INCLUDE_DIRS} )
 
 find_package(Qt5Core REQUIRED)
@@ -40,9 +43,6 @@ qt5_use_modules(${target} Core Xml)
 target_include_directories(${target} PUBLIC 
     ${INCLUDE_DIRS}
 )    
-set_target_properties(${target} PROPERTIES
-        INTERFACE_INCLUDE_DIRECTORIES ${INCLUDE_DIRS}
-    )
 install(FILES ${HEADER} DESTINATION "${INCLUDE_FOLDER}")
 install(TARGETS ODataServer EXPORT ODataServer 
 LIBRARY DESTINATION "${LIB_FOLDER}"

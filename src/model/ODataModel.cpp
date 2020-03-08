@@ -1,45 +1,17 @@
-#include <interface/ODataEntityInterface.h>
 #include <model/ODataEntitySet.h>
 #include <model/ODataModel.h>
 #include <QPluginLoader>
 #include <QCoreApplication>
 #include <QDir>
 #include <QDebug>
-ODataModel::ODataModel(QString host, QString base, QObject *parent) :
+ODataModel::ODataModel(QString host, QString base, QMap<QString, ODataSchema *> schemas, QObject *parent) :
 		QObject(parent) {
 	this->host = host;
 	this->base = base;
-}
-
-void ODataModel::ensureSchemas() {
-	if (this->schemas.count() == 0) {
-		QDir pluginsDir = QDir(QCoreApplication::applicationDirPath());
-		QStringList entryList = pluginsDir.entryList(QDir::Files);
-		pluginsDir.cd("plugins");
-		entryList.append(pluginsDir.entryList(QDir::Files));
-		for (QString& fileName : entryList) {
-			qDebug() << fileName;
-			QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
-			QObject* plugin = loader.instance();
-			auto entityInterface = qobject_cast<ODataEntityInterface*>(plugin);
-			if (entityInterface) {
-				QList<ODataSchema *> schemas =
-						entityInterface->GetSchemas();
-				for(ODataSchema * schema: schemas)
-				{
-
-					this->schemas.insert( schema->getNamespace(),
-							schema);
-				}
-			} else {
-				qDebug() << loader.errorString();
-			}
-		}
-	}
+	this->schemas = schemas;
 }
 
 QMap<QString, ODataEntitySet *> ODataModel::getEntitySets() {
-	this->ensureSchemas();
 	QMap<QString, ODataEntitySet * > entitySets;
 	for(QString key : this->schemas.keys()){
 		QString entityPrefix = this->schemas[key]->getNamespace() + ".";
@@ -67,12 +39,10 @@ ODataServiceDocument* ODataModel::getServiceDocument() {
 }
 
 ODataMetadata* ODataModel::getMetadata() {
-	this->ensureSchemas();
 	return new ODataMetadata(this->schemas);
 }
 
 QMap<QString, ODataAction * > ODataModel::getActions(){
-	this->ensureSchemas();
 	QMap<QString, ODataAction * > actions;
 	for(QString key : this->schemas.keys()){
 		QString entityPrefix = this->schemas[key]->getNamespace() + ".";
@@ -85,7 +55,6 @@ QMap<QString, ODataAction * > ODataModel::getActions(){
 }
 
 QMap<QString, ODataFunction * > ODataModel::getFunctions(){
-	this->ensureSchemas();
 	QMap<QString, ODataFunction * > functions;
 	for(QString key : this->schemas.keys()){
 		QString entityPrefix = this->schemas[key]->getNamespace() + ".";

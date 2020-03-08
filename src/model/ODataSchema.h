@@ -9,6 +9,7 @@
 #define SRC_MODEL_ODATASCHEMA_H_
 
 #include <qobject.h>
+#include <QDebug>
 #include <model/ODataEntityContainer.h>
 
 class ODATASERVER_EXPORT ODataSchema: public QObject {
@@ -17,9 +18,9 @@ public:
 	QString _namespace;
 	ODataEntityContainer *entityContainer;
 public:
+    virtual ~ODataSchema();
 	ODataSchema(QString _namespace, ODataEntityContainer *entityContainer,
 			QObject *parent = nullptr);
-	virtual ~ODataSchema();
 
 	QString& getNamespace() {
 		return _namespace;
@@ -29,5 +30,4 @@ public:
 		return entityContainer;
 	}
 };
-
 #endif /* SRC_MODEL_ODATASCHEMA_H_ */

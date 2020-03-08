@@ -4,7 +4,8 @@
 #include <QString>
 #include <request/ODataURLParser.h>
 #include <model/ODataModel.h>
-#include <interface/ODataEntityInterface.h>
+#include <ODataTestEntitySet.h>
+#include <ODataTestEntitySet2.h>
 #include <request/odatarequesthandler.h>
 #include <QtXml>
 
@@ -15,7 +16,16 @@ TEST(ODataEntityPluginTest, addsAllEntitiesOfPlugins)
 		char *args;
 		int argc = 0;
 		QCoreApplication *a = new QCoreApplication(argc, &args);
-		ODataModel *model = new ODataModel("https://localhost:8000/", "/odata/");
+		ODataEntityContainer * entityContainer1 = new ODataEntityContainer();
+		ODataSchema * schema1 = new ODataSchema("Test", entityContainer1);
+
+		entityContainer1->entitySets.insert("TestEntitySet", new ODataTestEntitySet());
+
+		ODataEntityContainer * entityContainer2 = new ODataEntityContainer();
+		ODataSchema * schema2 = new ODataSchema("Test2", entityContainer2);
+		entityContainer2->entitySets.insert("TestEntity2Set", new ODataTestEntitySet2());
+		auto schemas = QMap<QString, ODataSchema*>({{"Test", schema1},{"Test2", schema2}});
+		ODataModel *model = new ODataModel("https://localhost:8000/", "/odata/", schemas);
 		auto entities = model->getEntitySets();
 
 		EXPECT_EQ(entities.count(), 2);
@@ -35,7 +45,17 @@ TEST(ODataEntityPluginTest, returnServiceDocumentforAllEntities)
 		char *args;
 		int argc = 0;
 		QCoreApplication *a = new QCoreApplication(argc, &args);
-		ODataRequestHandler *handler = new ODataRequestHandler("https://localhost:8000", "/odata/");
+
+		ODataEntityContainer * entityContainer1 = new ODataEntityContainer();
+		ODataSchema * schema1 = new ODataSchema("Test", entityContainer1);
+
+		entityContainer1->entitySets.insert("TestEntitySet", new ODataTestEntitySet());
+
+		ODataEntityContainer * entityContainer2 = new ODataEntityContainer();
+		ODataSchema * schema2 = new ODataSchema("Test2", entityContainer2);
+		entityContainer2->entitySets.insert("TestEntity2Set", new ODataTestEntitySet2());
+		auto schemas = QMap<QString, ODataSchema*>({{"Test", schema1},{"Test2", schema2}});
+		ODataRequestHandler *handler = new ODataRequestHandler("https://localhost:8000", "/odata/",schemas);
 		QVariant result = handler->handleRequest(
 			QUrl("https://localhost:8000/odata/"), QUrlQuery(), 0, ODataRequestHandler::Method::GET);
 		EXPECT_EQ(result.toJsonObject()["@context"].toString(),
@@ -72,7 +92,16 @@ TEST(ODataEntityPluginTest, returnMetadata)
 		char *args;
 		int argc = 0;
 		QCoreApplication *a = new QCoreApplication(argc, &args);
-		ODataRequestHandler *handler = new ODataRequestHandler("https://localhost:8000", "/odata/");
+		ODataEntityContainer * entityContainer1 = new ODataEntityContainer();
+		ODataSchema * schema1 = new ODataSchema("Test", entityContainer1);
+
+		entityContainer1->entitySets.insert("TestEntitySet", new ODataTestEntitySet());
+
+		ODataEntityContainer * entityContainer2 = new ODataEntityContainer();
+		ODataSchema * schema2 = new ODataSchema("Test2", entityContainer2);
+		entityContainer2->entitySets.insert("TestEntity2Set", new ODataTestEntitySet2());
+		auto schemas = QMap<QString, ODataSchema*>({{"Test", schema1},{"Test2", schema2}});
+		ODataRequestHandler *handler = new ODataRequestHandler("https://localhost:8000", "/odata/",schemas);
 		QVariant result = handler->handleRequest(
 			QUrl("https://localhost:8000/odata/$metadata"), QUrlQuery(), 0, ODataRequestHandler::Method::GET);
 

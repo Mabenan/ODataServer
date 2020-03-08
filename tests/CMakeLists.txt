@@ -4,7 +4,6 @@ mark_as_advanced(
     gmock_build_tests gtest_build_samples gtest_build_tests
     gtest_disable_pthreads gtest_force_shared_crt gtest_hide_internal_symbols
 )
-add_subdirectory("tst_odataentityplugin_plugin_lib")
 set(target "ODataServerTest")
 add_definitions(-DODATAENTITY_PLUGIN_TEST)
 enable_testing()
@@ -32,4 +31,4 @@ set_target_properties(${target}
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )    
 gtest_discover_tests(${target})    
-target_link_libraries(${target} ODataServer ODataServerEntityPlugin_TEST_lib gtest_main)
+target_link_libraries(${target} ODataServer gtest_main)
