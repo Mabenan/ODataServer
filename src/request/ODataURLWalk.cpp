@@ -77,8 +77,7 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 		}
 		else
 		{
-			ODataEntitySet *entitySet = entitySets[prePossibleKey];
-			entitySet->entities.clear();
+			ODataEntitySet *entitySet = entitySets[prePossibleKey]->clone();
 			ODataEntity *entityObject;
 			QJsonObject bodyJSON;
 			QVariant::Type bodyType = this->body.type();

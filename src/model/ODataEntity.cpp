@@ -3,9 +3,20 @@
 #include <QJsonArray>
 #include <QJsonValue>
 
-ODataEntity::ODataEntity(QObject * parent) : QObject(parent) {
+ODataEntity::ODataEntity() {
     
 
+}
+
+ODataEntity::~ODataEntity() {
+
+}
+
+ODataEntity::ODataEntity(const ODataEntity &odataEntity) {
+ name = odataEntity.name;
+ description = odataEntity.description;
+ data = odataEntity.data;
+ property = odataEntity.property;
 }
 
 QJsonObject ODataEntity::toJSON() {

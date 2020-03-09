@@ -13,8 +13,8 @@
 
 class ODataTestEntitySet2: public ODataEntitySet {
 public:
-	ODataTestEntitySet2(QObject * parent = nullptr) : ODataEntitySet(parent) {
-		this->entity = new ODataTestEntity2(this);
+	ODataTestEntitySet2() : ODataEntitySet() {
+		this->entity = new ODataTestEntity2();
 		this->name = "TestEntity2Set";
 
 	}
@@ -28,6 +28,7 @@ public:
 	virtual void deleteSet() const;
 	virtual void insertSet() const;
 	virtual ODataEntity* get(QMap<QString, QVariant> keys, QUrlQuery query);
+	virtual ODataEntitySet* clone() const;
 };
 
 #endif /* TESTS_TST_ODATAENTITYPLUGIN_ODATATESTENTITYSET2_H_ */

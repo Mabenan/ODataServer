@@ -25,3 +25,7 @@ ODataEntity* ODataTestEntitySet2::get(QMap<QString, QVariant> keys,
 		QUrlQuery query) {
 	return nullptr;
 }
+
+ODataEntitySet* ODataTestEntitySet2::clone() const {
+	return new ODataTestEntitySet2(*this);
+}

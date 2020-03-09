@@ -7,18 +7,15 @@
 class ODataTestEntity : public ODataEntity
 {
 
-    Q_OBJECT
-
 public:
-
-    ODataTestEntity(QObject * parent = nullptr);
 
 	virtual void deleteEntity() const;
 	virtual void update() const;
 	virtual void insert() const;
 	virtual void get(QMap<QString, QVariant> keys, QUrlQuery query);
-
-
+	virtual ODataEntity* clone() const;
+    ODataTestEntity();
+    ODataTestEntity(const ODataTestEntity &oDataTestEntity);
 };
 
 #endif // !ODATA_ENTITYTEST_H

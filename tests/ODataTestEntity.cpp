@@ -1,7 +1,7 @@
 #include <ODataTestEntity.h>
 #include <model/ODataProperty.h>
 
-ODataTestEntity::ODataTestEntity(QObject * parent) : ODataEntity(parent) {
+ODataTestEntity::ODataTestEntity() : ODataEntity() {
     this->name = "TestEntity";
     this->description = "Test Entity";
     this->property.insert("Id", new ODataProperty("Edm.Int32", true));
@@ -17,4 +17,11 @@ void ODataTestEntity::insert() const {
 }
 
 void ODataTestEntity::get(QMap<QString, QVariant> keys, QUrlQuery query) {
+}
+
+ODataEntity* ODataTestEntity::clone() const {
+	return new ODataTestEntity(*this);
+}
+
+ODataTestEntity::ODataTestEntity(const ODataTestEntity &oDataTestEntity) : ODataEntity(oDataTestEntity) {
 }

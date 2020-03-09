@@ -7,11 +7,11 @@
 class ODataTestEntity2 : public ODataEntity
 {
 
-    Q_OBJECT
 
 public:
-
-    ODataTestEntity2(QObject * parent = nullptr);
+	virtual ODataEntity* clone() const;
+    ODataTestEntity2();
+    ODataTestEntity2(const ODataTestEntity2 &ODataTestEntity2);
 
 	virtual void deleteEntity() const;
 	virtual void update() const;

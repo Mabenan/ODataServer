@@ -9,18 +9,24 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
-
-ODataEntitySet::ODataEntitySet(QObject* parent) : QObject(parent) {
+#include <model/ODataEntity.h>
+ODataEntitySet::ODataEntitySet() {
 	this->name = "";
 	this->entity = nullptr;
 }
 
 ODataEntitySet::~ODataEntitySet() {
-	// TODO Auto-generated destructor stub
+	delete this->entity;
 }
 
 QString ODataEntitySet::getName() {
 	return this->name;
+}
+
+ODataEntitySet::ODataEntitySet(const ODataEntitySet &odataEntitySet) {
+	this->entity = odataEntitySet.entity->clone();
+	this->name = odataEntitySet.name;
+	this->entities = odataEntitySet.entities;
 }
 
 QJsonObject ODataEntitySet::toJSON() {

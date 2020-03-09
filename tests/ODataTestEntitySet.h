@@ -13,8 +13,8 @@
 
 class ODataTestEntitySet: public ODataEntitySet {
 public:
-	ODataTestEntitySet(QObject * parent = nullptr) : ODataEntitySet(parent) {
-		this->entity = new ODataTestEntity(this);
+	ODataTestEntitySet() : ODataEntitySet() {
+		this->entity = new ODataTestEntity();
 		this->name = "TestEntitySet";
 
 
@@ -22,7 +22,7 @@ public:
 	virtual ~ODataTestEntitySet() {
 		// TODO Auto-generated destructor stub
 	}
-
+	virtual ODataEntitySet * clone() const;
 	virtual void getSet(
 			QUrlQuery query);
 	virtual void updateSet() const;

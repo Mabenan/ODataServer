@@ -47,3 +47,7 @@ ODataEntity *ODataTestEntitySet::get(QMap<QString, QVariant> keys,
 	}
 	return entity1;
 }
+
+ODataEntitySet* ODataTestEntitySet::clone() const {
+	return new ODataTestEntitySet(*this);
+}

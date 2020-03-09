@@ -16,16 +16,16 @@
 #include <QMap>
 #include <QVariant>
 
-class ODATASERVER_EXPORT ODataEntitySet: public QObject {
-    Q_OBJECT
+class ODATASERVER_EXPORT ODataEntitySet {
 protected:
  QString name;
  ODataEntity * entity;
 public:
  QList<ODataEntity *> entities; //Data part
 public:
-	ODataEntitySet(QObject * parent = nullptr);
+	ODataEntitySet();
 	virtual ~ODataEntitySet();
+	ODataEntitySet(const ODataEntitySet &odataEntitySet);
 	QString getName();
     virtual ODataEntity * get(QMap<QString, QVariant> keys, QUrlQuery query)  = 0;
     virtual void getSet(QUrlQuery query)  = 0;
@@ -36,6 +36,7 @@ public:
     	return this->entity;
     }
 
+    virtual ODataEntitySet * clone() const = 0;
     QJsonObject toJSON();
 };
 
