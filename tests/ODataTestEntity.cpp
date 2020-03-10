@@ -1,11 +1,14 @@
 #include <ODataTestEntity.h>
 #include <model/ODataProperty.h>
+#include <ODataTestEntity2.h>
+#include <model/ODataNavigationProperty.h>
 
 ODataTestEntity::ODataTestEntity() : ODataEntity() {
     this->name = "TestEntity";
     this->description = "Test Entity";
     this->property.insert("Id", new ODataProperty("Edm.Int32", true));
     this->property.insert("Field", new ODataProperty("Edm.String", false));
+    this->property.insert("TestEntity2", new ODataNavigationProperty(new ODataTestEntity2(), false));
 }
 void ODataTestEntity::deleteEntity() const {
 }

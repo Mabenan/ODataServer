@@ -9,7 +9,6 @@ add_definitions(-DODATAENTITY_PLUGIN_TEST)
 enable_testing()
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB SRC
     "*.cpp"
@@ -30,5 +29,9 @@ set_target_properties(${target}
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )    
+target_precompile_headers(${target}
+ PUBLIC
+  "ODataTest.precompiled.h"
+ )
 gtest_discover_tests(${target})    
 target_link_libraries(${target} ODataServer gtest_main)

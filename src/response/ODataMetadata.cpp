@@ -6,6 +6,7 @@
  */
 
 #include <ODataMetadata.h>
+#include <ODataNavigationProperty.h>
 
 QDomDocument * ODataMetadata::getAsXML() {
 
@@ -35,9 +36,21 @@ QDomDocument * ODataMetadata::getAsXML() {
 	    	entityElement.setAttribute("Name", entity->getName());
 	    	QDomElement entityKeyElement = doc->createElement("Key");
 	    	for(QString property : entity->property.keys()){
-	    		QDomElement entityPropElement = doc->createElement("Property");
+	    		QDomElement entityPropElement ;
+	    		if(entity->property[property]->type == "Nav"){
+	    			ODataNavigationProperty * navProp = static_cast<ODataNavigationProperty *>(entity->property[property]);
+	    			entityPropElement = doc->createElement("NavigationProperty");
+	    			if(navProp->multi){
+	    				entityPropElement.setAttribute("Type", "Collection("+  _namespace + "." + navProp->entity->getName() + ")");
+	    			}else{
+	    				entityPropElement.setAttribute("Type", ""+  _namespace + "." + navProp->entity->getName() + "");
+
+	    			}
+	    		}else{
+	    			entityPropElement = doc->createElement("Property");
+		    		entityPropElement.setAttribute("Type", entity->property[property]->type);
+	    		}
 	    		entityPropElement.setAttribute("Name", property);
-	    		entityPropElement.setAttribute("Type", entity->property[property]->type);
 	    		if(entity->property[property]->key){
 	    			QDomElement propertyRefElement = doc->createElement("PropertyRef");
 	    			propertyRefElement.setAttribute("Name", property);

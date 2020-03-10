@@ -1,5 +1,6 @@
 
 add_definitions(-DODATASERVER_LIBRARY)
+add_definitions (-DCMAKE_CXX_COMPILER_ARG1=-std=c++20)
 file(GLOB SRCl
     "*.cpp"
 )

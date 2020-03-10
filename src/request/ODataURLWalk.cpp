@@ -7,6 +7,7 @@
 
 #include <ODataURLWalk.h>
 #include <request/odatarequesthandler.h>
+#include <model/ODataReference.h>
 
 ODataURLWalk::ODataURLWalk(ODataModel *model, QUrl url, QUrlQuery query, QVariant body, ODataRequestHandler::Method method, QObject *parent) : QObject(parent)
 {
@@ -15,6 +16,7 @@ ODataURLWalk::ODataURLWalk(ODataModel *model, QUrl url, QUrlQuery query, QVarian
 	this->query = query;
 	this->body = body;
 	this->method = method;
+	this->lastEntity = nullptr;
 }
 
 QVariant ODataURLWalk::walkURL(QStringList segments)
@@ -54,7 +56,43 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 				keys.insert(keyName.toString(), keyValue.toString());
 			}
 		}
-		if (!entitySets.contains(prePossibleKey))
+		if(this->lastEntity != nullptr){
+			if(this->lastEntity->data.contains(prePossibleKey)){
+				std::variant<int, float, QVariant, ODataReference> anyValue = this->lastEntity->data[prePossibleKey];
+			if (auto intValue = std::get_if<int>(&anyValue))
+			{
+				this->currentResult = QJsonValue::fromVariant(QVariant::fromValue(*intValue));
+			}
+			else if (auto floatValue = std::get_if<float>(&anyValue))
+			{
+				this->currentResult = QJsonValue::fromVariant(QVariant::fromValue(*floatValue));
+			}
+			else if (auto variantValue = std::get_if<QVariant>(&anyValue))
+			{
+				this->currentResult = QJsonValue::fromVariant(*variantValue);
+			}
+			else if (auto referenceValue = std::get_if<ODataReference>(&anyValue))
+			{
+				if(referenceValue->multi){
+					this->currentResult = referenceValue->entitySet->toJSON();
+				}else{
+					this->currentResult = referenceValue->entity->toJSON();
+					this->lastEntity = referenceValue->entity;
+				}
+			}
+			}else{
+
+				this->currentResult = "Error " + prePossibleKey + " not a property of entity "+ this->lastEntity->getName();
+			}
+			if (this->currentPathIndex < segments.length() - 1)
+			{
+				this->currentPathIndex++;
+			}
+			else
+			{
+				finished = true;
+			}
+		}else if (!entitySets.contains(prePossibleKey))
 		{
 			if (!actions.contains(prePossibleKey))
 			{
@@ -80,6 +118,7 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 			ODataEntitySet *entitySet = entitySets[prePossibleKey]->clone();
 			ODataEntity *entityObject;
 			QJsonObject bodyJSON;
+			QMap<QString, QVariant> variantMap;
 			QVariant::Type bodyType = this->body.type();
 			if(bodyType == QVariant::Type::ByteArray){
 				QJsonParseError parseError;
@@ -94,6 +133,7 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 				{
 					entityObject = entitySet->get(keys, this->query);
 					this->currentResult = entityObject->toJSON();
+					this->lastEntity = entityObject;
 				}
 				else
 				{
@@ -103,17 +143,27 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 				break;
 			case ODataRequestHandler::Method::POST:
 				entityObject = entitySet->getDefaultEntity();
-				entityObject->data = bodyJSON.toVariantMap();
+				variantMap = bodyJSON.toVariantMap();
+				for(QString variantKey : variantMap.keys()){
+					QVariant value = variantMap[variantKey];
+					entityObject->data.insert(variantKey, value);
+				}
 				entityObject->insert();
 				this->currentResult = entityObject->toJSON();
+				this->lastEntity = entityObject;
 				break;
 			case ODataRequestHandler::Method::PATCH:
 				if (keys.size() > 0)
 				{
 					entityObject = entitySet->get(keys, this->query);
-					entityObject->data = bodyJSON.toVariantMap();
+					variantMap = bodyJSON.toVariantMap();
+					for(QString variantKey : variantMap.keys()){
+						QVariant value = variantMap[variantKey];
+						entityObject->data.insert(variantKey, value);
+					}
 					entityObject->update();
 					this->currentResult = entityObject->toJSON();
+					this->lastEntity = entityObject;
 				}
 				else
 				{
@@ -128,6 +178,7 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 					entityObject = entitySet->get(keys, this->query);
 					entityObject->deleteEntity();
 					this->currentResult = entityObject->toJSON();
+					this->lastEntity = entityObject;
 				}
 				else
 				{

@@ -21,6 +21,7 @@ private:
     ODataRequestHandler::Method method;
     int currentPathIndex = 0;
     QVariant currentResult;
+    ODataEntity * lastEntity;
 public:
     QVariant walkURL(QStringList segments);
 

@@ -16,7 +16,7 @@ ODataEntitySet::ODataEntitySet() {
 }
 
 ODataEntitySet::~ODataEntitySet() {
-	delete this->entity;
+
 }
 
 QString ODataEntitySet::getName() {

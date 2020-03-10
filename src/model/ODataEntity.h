@@ -7,13 +7,15 @@
 #include <QUrlQuery>
 #include <QMap>
 #include <QVariant>
+#include <variant>
+class ODataReference;
 class ODATASERVER_EXPORT ODataEntity
 {
 protected:
 	QString name;
 	QString description;
 public:
-	QMap<QString, QVariant> data;
+	QMap<QString, std::variant<int, float, QVariant, ODataReference>> data;
 	QMap<QString, ODataProperty *> property;
 public:
 

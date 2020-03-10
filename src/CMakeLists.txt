@@ -3,9 +3,9 @@ set(target "ODataServer")
 add_definitions(-DODATASERVER_LIBRARY)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+add_definitions (-DCMAKE_CXX_COMPILER_ARG1=-std=c++20)
 file(GLOB SRC
     "*.cpp"
 )
