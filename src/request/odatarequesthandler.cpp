@@ -20,7 +20,7 @@ QVariant ODataRequestHandler::handleRequest(QUrl url, QUrlQuery query, QVariant 
         return serviceDoc->getJson();
     }else if(url.path().toLower() == this->base + "$metadata"){
         ODataMetadata * metadata = this->model->getMetadata();
-        return QVariant(metadata->getAsXML()->toString());
+        return QVariant("XML:"+metadata->getAsXML()->toString());
     }
     else
     {

@@ -16,7 +16,7 @@ QMap<QString, ODataEntitySet *> ODataModel::getEntitySets() {
 	for(QString key : this->schemas.keys()){
 		QString entityPrefix = this->schemas[key]->getNamespace() + ".";
 		for(QString key2 : this->schemas[key]->getEntityContainer()->entitySets.keys()){
-			entitySets.insert(entityPrefix + key2,this->schemas[key]->getEntityContainer()->entitySets[key2]);
+			entitySets.insert(key2,this->schemas[key]->getEntityContainer()->entitySets[key2]);
 		}
 	}
 	return entitySets;
