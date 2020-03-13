@@ -65,7 +65,7 @@ TEST(ODataEntityPluginTest, returnServiceDocumentforAllEntities) {
 	try {
 		ODataRequestHandler * handler = setupHandler();
 		QVariant result = handler->handleRequest(
-				QUrl("https://localhost:8000/odata/"), QUrlQuery(), 0,
+				QUrl("https://localhost:8000/odata/"), QUrlQuery(), 0, QVariantMap(),
 				ODataRequestHandler::Method::GET);
 		EXPECT_EQ(result.toJsonObject()["@context"].toString(),
 				"https://localhost:8000/odata/$metadata");
@@ -104,7 +104,7 @@ TEST(ODataEntityPluginTest, returnDataForEntity) {
 		ODataRequestHandler * handler = setupHandler();
 		QVariant result = handler->handleRequest(
 				QUrl("https://localhost:8000/odata/Test.TestEntitySet(Id=1)"),
-				QUrlQuery(), 0, ODataRequestHandler::Method::GET);
+				QUrlQuery(), 0, QVariantMap(), ODataRequestHandler::Method::GET);
 		QJsonObject json = result.toJsonObject();
 		QJsonDocument doc(json);
 		QString jsonString = doc.toJson(QJsonDocument::Indented);
@@ -121,7 +121,7 @@ TEST(ODataEntityPluginTest, returnsDataOfReference) {
 		ODataRequestHandler * handler = setupHandler();
 		QVariant result = handler->handleRequest(
 				QUrl("https://localhost:8000/odata/Test.TestEntitySet(Id=1)/TestEntity2"),
-				QUrlQuery(), 0, ODataRequestHandler::Method::GET);
+				QUrlQuery(), 0,QVariantMap(), ODataRequestHandler::Method::GET);
 		QJsonObject json = result.toJsonObject();
 		QJsonDocument doc(json);
 		QString jsonString = doc.toJson(QJsonDocument::Indented);
@@ -139,7 +139,7 @@ TEST(ODataEntityPluginTest, returnDataForEntitySet) {
 		ODataRequestHandler * handler = setupHandler();
 		QVariant result = handler->handleRequest(
 				QUrl("https://localhost:8000/odata/Test.TestEntitySet"),
-				QUrlQuery(), 0, ODataRequestHandler::Method::GET);
+				QUrlQuery(), 0,QVariantMap(), ODataRequestHandler::Method::GET);
 		QJsonObject json = result.toJsonObject();
 		QJsonDocument doc(json);
 		QString jsonString = doc.toJson(QJsonDocument::Indented);
@@ -154,7 +154,7 @@ TEST(ODataEntityPluginTest, returnDataForEntitySet) {
 						""), "Test");
 		result = handler->handleRequest(
 				QUrl("https://localhost:8000/odata/Test.TestEntitySet"),
-				QUrlQuery(), 0, ODataRequestHandler::Method::GET);
+				QUrlQuery(), 0,QVariantMap(), ODataRequestHandler::Method::GET);
 		json = result.toJsonObject();
 		doc = QJsonDocument(json);
 		jsonString = doc.toJson(QJsonDocument::Indented);
@@ -177,7 +177,7 @@ TEST(ODataEntityPluginTest, returnMetadata) {
 	try {
 		ODataRequestHandler * handler = setupHandler();
 		QVariant result = handler->handleRequest(
-				QUrl("https://localhost:8000/odata/$metadata"), QUrlQuery(), 0,
+				QUrl("https://localhost:8000/odata/$metadata"), QUrlQuery(), 0,QVariantMap(),
 				ODataRequestHandler::Method::GET);
 
 		QDomDocument *dom = new QDomDocument("metadata");

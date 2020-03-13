@@ -27,11 +27,11 @@ public:
 	virtual ~ODataEntitySet();
 	ODataEntitySet(const ODataEntitySet &odataEntitySet);
 	QString getName();
-    virtual ODataEntity * get(QMap<QString, QVariant> keys, QUrlQuery query)  = 0;
-    virtual void getSet(QUrlQuery query)  = 0;
-    virtual void updateSet() const = 0;
-    virtual void deleteSet() const = 0;
-    virtual void insertSet() const = 0;
+    virtual ODataEntity * get(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head)  = 0;
+    virtual void getSet(QUrlQuery query, QVariantMap head)  = 0;
+    virtual void updateSet(QUrlQuery query, QVariantMap head) const = 0;
+    virtual void deleteSet(QUrlQuery query, QVariantMap head) const = 0;
+    virtual void insertSet(QUrlQuery query, QVariantMap head) const = 0;
     ODataEntity * getDefaultEntity(){
     	return this->entity;
     }

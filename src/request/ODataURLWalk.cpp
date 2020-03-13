@@ -9,7 +9,7 @@
 #include <request/odatarequesthandler.h>
 #include <model/ODataReference.h>
 
-ODataURLWalk::ODataURLWalk(ODataModel *model, QUrl url, QUrlQuery query, QVariant body, ODataRequestHandler::Method method, QObject *parent) : QObject(parent)
+ODataURLWalk::ODataURLWalk(ODataModel *model, QUrl url, QUrlQuery query, QVariant body, QVariantMap head, ODataRequestHandler::Method method, QObject *parent) : QObject(parent)
 {
 	this->model = model;
 	this->url = url;
@@ -17,6 +17,7 @@ ODataURLWalk::ODataURLWalk(ODataModel *model, QUrl url, QUrlQuery query, QVarian
 	this->body = body;
 	this->method = method;
 	this->lastEntity = nullptr;
+	this->head = head;
 }
 
 QVariant ODataURLWalk::walkURL(QStringList segments)
@@ -131,13 +132,13 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 
 				if (keys.size() > 0)
 				{
-					entityObject = entitySet->get(keys, this->query);
+					entityObject = entitySet->get(keys, this->query, this->head);
 					this->currentResult = entityObject->toJSON();
 					this->lastEntity = entityObject;
 				}
 				else
 				{
-					entitySet->getSet(this->query);
+					entitySet->getSet(this->query, this->head);
 					this->currentResult = entitySet->toJSON();
 				}
 				break;
@@ -148,20 +149,20 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 					QVariant value = variantMap[variantKey];
 					entityObject->data.insert(variantKey, value);
 				}
-				entityObject->insert();
+				entityObject->insert(keys, this->query, this->head);
 				this->currentResult = entityObject->toJSON();
 				this->lastEntity = entityObject;
 				break;
 			case ODataRequestHandler::Method::PATCH:
 				if (keys.size() > 0)
 				{
-					entityObject = entitySet->get(keys, this->query);
+					entityObject = entitySet->get(keys, this->query, this->head);
 					variantMap = bodyJSON.toVariantMap();
 					for(QString variantKey : variantMap.keys()){
 						QVariant value = variantMap[variantKey];
 						entityObject->data.insert(variantKey, value);
 					}
-					entityObject->update();
+					entityObject->update(keys, this->query, this->head);
 					this->currentResult = entityObject->toJSON();
 					this->lastEntity = entityObject;
 				}
@@ -175,15 +176,15 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 			case ODataRequestHandler::Method::DELETE:
 				if (keys.size() > 0)
 				{
-					entityObject = entitySet->get(keys, this->query);
-					entityObject->deleteEntity();
+					entityObject = entitySet->get(keys, this->query, this->head);
+					entityObject->deleteEntity(keys, this->query, this->head);
 					this->currentResult = entityObject->toJSON();
 					this->lastEntity = entityObject;
 				}
 				else
 				{
-					entitySet->getSet(this->query);
-					entitySet->deleteSet();
+					entitySet->getSet(this->query, this->head);
+					entitySet->deleteSet(this->query, this->head);
 					this->currentResult = entitySet->toJSON();
 				}
 				break;

@@ -29,10 +29,10 @@ public:
     	return this->description;
     }
     virtual ODataEntity * clone() const = 0;
-    virtual void get(QMap<QString, QVariant> keys, QUrlQuery query)  = 0;
-    virtual void update() const = 0;
-    virtual void deleteEntity() const = 0;
-    virtual void insert() const = 0;
+    virtual void get(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head)  = 0;
+    virtual void update(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head) const = 0;
+    virtual void deleteEntity(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head) const = 0;
+    virtual void insert(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head) const = 0;
 
     QJsonObject toJSON();
 };

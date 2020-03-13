@@ -11,7 +11,7 @@ class ODATASERVER_EXPORT ODataURLWalk : public QObject
     Q_OBJECT
 
 public:
-    explicit ODataURLWalk(ODataModel* model, QUrl url, QUrlQuery query, QVariant body, ODataRequestHandler::Method method, QObject *parent = nullptr);
+    explicit ODataURLWalk(ODataModel* model, QUrl url, QUrlQuery query, QVariant body, QVariantMap head, ODataRequestHandler::Method method, QObject *parent = nullptr);
 
 private:
     ODataModel* model;
@@ -22,6 +22,7 @@ private:
     int currentPathIndex = 0;
     QVariant currentResult;
     ODataEntity * lastEntity;
+    QVariantMap head;
 public:
     QVariant walkURL(QStringList segments);
 

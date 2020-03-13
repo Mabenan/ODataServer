@@ -8,21 +8,21 @@
 #include <ODataTestEntitySet2.h>
 
 void ODataTestEntitySet2::getSet(
-		QUrlQuery query) {
+		QUrlQuery query, QVariantMap head) {
 
 }
 
-void ODataTestEntitySet2::updateSet() const {
+void ODataTestEntitySet2::updateSet(QUrlQuery query, QVariantMap head) const {
 }
 
-void ODataTestEntitySet2::deleteSet() const {
+void ODataTestEntitySet2::deleteSet(QUrlQuery query, QVariantMap head) const {
 }
 
-void ODataTestEntitySet2::insertSet() const {
+void ODataTestEntitySet2::insertSet(QUrlQuery query, QVariantMap head) const {
 }
 
 ODataEntity* ODataTestEntitySet2::get(QMap<QString, QVariant> keys,
-		QUrlQuery query) {
+		QUrlQuery query, QVariantMap head) {
 	return nullptr;
 }
 

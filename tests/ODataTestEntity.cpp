@@ -10,16 +10,16 @@ ODataTestEntity::ODataTestEntity() : ODataEntity() {
     this->property.insert("Field", new ODataProperty("Edm.String", false));
     this->property.insert("TestEntity2", new ODataNavigationProperty(new ODataTestEntity2(), false));
 }
-void ODataTestEntity::deleteEntity() const {
+void ODataTestEntity::deleteEntity(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head) const {
 }
 
-void ODataTestEntity::update() const {
+void ODataTestEntity::update(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head) const {
 }
 
-void ODataTestEntity::insert() const {
+void ODataTestEntity::insert(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head) const {
 }
 
-void ODataTestEntity::get(QMap<QString, QVariant> keys, QUrlQuery query) {
+void ODataTestEntity::get(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head) {
 }
 
 ODataEntity* ODataTestEntity::clone() const {

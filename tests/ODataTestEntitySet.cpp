@@ -9,7 +9,7 @@
 #include <ODataTestEntity2.h>
 
 void ODataTestEntitySet::getSet(
-	QUrlQuery query)
+	QUrlQuery query, QVariantMap head)
 {
 	ODataTestEntity *entity1 = new ODataTestEntity();
 	entity1->data.insert("Id", 1);
@@ -21,20 +21,20 @@ void ODataTestEntitySet::getSet(
 	this->entities.append(entity1);
 }
 
-void ODataTestEntitySet::updateSet() const
+void ODataTestEntitySet::updateSet(QUrlQuery query, QVariantMap head) const
 {
 }
 
-void ODataTestEntitySet::deleteSet() const
+void ODataTestEntitySet::deleteSet(QUrlQuery query, QVariantMap head) const
 {
 }
 
-void ODataTestEntitySet::insertSet() const
+void ODataTestEntitySet::insertSet(QUrlQuery query, QVariantMap head) const
 {
 }
 
 ODataEntity *ODataTestEntitySet::get(QMap<QString, QVariant> keys,
-									 QUrlQuery query)
+									 QUrlQuery query, QVariantMap head)
 {
 	ODataTestEntity *entity1 = new ODataTestEntity();
 	ODataTestEntity2 * testEntity2;

@@ -13,10 +13,10 @@ public:
     ODataTestEntity2();
     ODataTestEntity2(const ODataTestEntity2 &ODataTestEntity2);
 
-	virtual void deleteEntity() const;
-	virtual void update() const;
-	virtual void insert() const;
-	virtual void get(QMap<QString, QVariant> keys, QUrlQuery query);
+	virtual void deleteEntity(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head) const;
+	virtual void update(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head) const;
+	virtual void insert(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head) const;
+	virtual void get(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head);
 
 
 };
