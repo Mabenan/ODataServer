@@ -9,6 +9,7 @@
 #define SRC_ODATAFUNCTION_H_
 
 #include <model/ODataEntitySet.h>
+#include <model/ODataEntity.h>
 #include <qobject.h>
 #include <ODataServer_global.h>
 
@@ -33,7 +34,7 @@ public:
 		return name;
 	}
 
-	virtual ODataEntitySet * call() const = 0;
+	virtual ODataEntity * call(QMap<QString, QVariant> keys, QUrlQuery query, QVariantMap head) const = 0;
 };
 
 #endif /* SRC_ODATAFUNCTION_H_ */

@@ -63,6 +63,22 @@ QDomDocument * ODataMetadata::getAsXML() {
 	    	schema.appendChild(entityElement);
 
 	    }
+	    for(QString functionImportName : entityContainer->functions.keys()){
+	    	ODataFunction * function = entityContainer->functions[functionImportName];
+
+	    	QDomElement entitySetElement = doc->createElement("FunctionImport");
+	    	entitySetElement.setAttribute("Name", function->getName());
+	    	entitySetElement.setAttribute("Function", _namespace + "." + function->getName());
+	    	entitySetElement.setAttribute("EntitySet", _namespace + "." + function->getEntitySetToReturn()->getName());
+	    	eCElement.appendChild(entitySetElement);
+	    	QDomElement entityElement = doc->createElement("Function");
+	    	entityElement.setAttribute("Name", function->getName());
+	    	entityElement.setAttribute("isBound", "false");
+	    	QDomElement functionReturn = doc->createElement("RetrunType");
+	    	functionReturn.setAttribute("Type",_namespace + "." + function->getEntitySetToReturn()->getDefaultEntity()->getName() );
+	    	entityElement.appendChild(functionReturn);
+	    	schema.appendChild(entityElement);
+	    }
 	    schema.appendChild(eCElement);
 	    dataServices.appendChild(schema);
 	}

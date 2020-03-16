@@ -38,6 +38,9 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 		{
 			QString possibleKey = resourceParts[1];
 			qDebug() << possibleKey;
+			if(possibleKey == ")"){
+
+			}else{
 			QStringRef keySegment(&possibleKey, 0, resourceParts[1].length() - 1);
 			QVector<QStringRef> keyParts = keySegment.split(',');
 			for (int keyNumber = 0; keyNumber < keyParts.length(); keyNumber++)
@@ -55,6 +58,7 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 				qDebug() << keyName.toString();
 				qDebug() << keyValue.toString();
 				keys.insert(keyName.toString(), keyValue.toString());
+			}
 			}
 		}
 		if(this->lastEntity != nullptr){
@@ -105,13 +109,30 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 				}
 				else
 				{
-					this->currentResult = functions[prePossibleKey]->call()->toJSON();
+					this->lastEntity = functions[prePossibleKey]->call(keys, this->query, this->head);
+		this->currentResult = this->lastEntity->toJSON();
+					if (this->currentPathIndex < segments.length() - 1)
+					{
+						this->currentPathIndex++;
+					}
+					else
+					{
+						finished = true;
+					}
 				}
 			}
 			else
 			{
 				actions[prePossibleKey]->call();
 				this->currentResult = QJsonObject();
+				if (this->currentPathIndex < segments.length() - 1)
+				{
+					this->currentPathIndex++;
+				}
+				else
+				{
+					finished = true;
+				}
 			}
 		}
 		else
