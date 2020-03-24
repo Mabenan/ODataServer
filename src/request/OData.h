@@ -5,5 +5,6 @@
 #include <request/odatarequesthandler.h>
 #include <request/ODataURLParser.h>
 #include <request/ODataURLWalk.h>
+#include <request/ODataException.h>
 
 #endif

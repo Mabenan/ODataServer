@@ -47,7 +47,7 @@ QMap<QString, ODataAction * > ODataModel::getActions(){
 	for(QString key : this->schemas.keys()){
 		QString entityPrefix = this->schemas[key]->getNamespace() + ".";
 		for(QString key2 : this->schemas[key]->getEntityContainer()->actionImports.keys()){
-			actions.insert(entityPrefix + key2,this->schemas[key]->getEntityContainer()->actionImports[key2]);
+			actions.insert(key2,this->schemas[key]->getEntityContainer()->actionImports[key2]);
 		}
 	}
 	return actions;
@@ -59,7 +59,7 @@ QMap<QString, ODataFunction * > ODataModel::getFunctions(){
 	for(QString key : this->schemas.keys()){
 		QString entityPrefix = this->schemas[key]->getNamespace() + ".";
 		for(QString key2 : this->schemas[key]->getEntityContainer()->functions.keys()){
-			functions.insert(entityPrefix + key2,this->schemas[key]->getEntityContainer()->functions[key2]);
+			functions.insert(key2,this->schemas[key]->getEntityContainer()->functions[key2]);
 		}
 	}
 	return functions;

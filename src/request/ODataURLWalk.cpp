@@ -8,7 +8,7 @@
 #include <ODataURLWalk.h>
 #include <request/odatarequesthandler.h>
 #include <model/ODataReference.h>
-
+#include <request/ODataException.h>
 ODataURLWalk::ODataURLWalk(ODataModel *model, QUrl url, QUrlQuery query, QVariant body, QVariantMap head, ODataRequestHandler::Method method, QObject *parent) : QObject(parent)
 {
 	this->model = model;
@@ -22,12 +22,12 @@ ODataURLWalk::ODataURLWalk(ODataModel *model, QUrl url, QUrlQuery query, QVarian
 
 QVariant ODataURLWalk::walkURL(QStringList segments)
 {
-
 	bool finished = false;
 	bool error = false;
 	QMap<QString, ODataEntitySet *> entitySets = model->getEntitySets();
 	QMap<QString, ODataAction *> actions = model->getActions();
 	QMap<QString, ODataFunction *> functions = model->getFunctions();
+	try{
 	while (!finished && !error)
 	{
 		QString currentSegment = segments[this->currentPathIndex];
@@ -66,15 +66,21 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 				std::variant<int, float, QVariant, ODataReference> anyValue = this->lastEntity->data[prePossibleKey];
 			if (auto intValue = std::get_if<int>(&anyValue))
 			{
-				this->currentResult = QJsonValue::fromVariant(QVariant::fromValue(*intValue));
+				QJsonObject jObject = QJsonObject();
+							jObject["value"] =QJsonValue::fromVariant(QVariant::fromValue(*intValue));
+				this->currentResult = jObject;
 			}
 			else if (auto floatValue = std::get_if<float>(&anyValue))
 			{
-				this->currentResult = QJsonValue::fromVariant(QVariant::fromValue(*floatValue));
+				QJsonObject jObject = QJsonObject();
+			jObject["value"] = QJsonValue::fromVariant(QVariant::fromValue(*floatValue));
+			this->currentResult = jObject;
 			}
 			else if (auto variantValue = std::get_if<QVariant>(&anyValue))
 			{
-				this->currentResult = QJsonValue::fromVariant(*variantValue);
+				QJsonObject jObject = QJsonObject();
+							jObject["value"] =QJsonValue::fromVariant(*variantValue);
+							this->currentResult = jObject;
 			}
 			else if (auto referenceValue = std::get_if<ODataReference>(&anyValue))
 			{
@@ -87,7 +93,13 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 			}
 			}else{
 
-				this->currentResult = "Error " + prePossibleKey + " not a property of entity "+ this->lastEntity->getName();
+				QJsonObject jObject = QJsonObject();
+				QJsonObject jerror = QJsonObject();
+				jerror["code"] = QJsonValue("");
+				jerror["message"] = QJsonValue(QString("Error " + prePossibleKey + " not a property of entity "+ this->lastEntity->getName()));
+				jObject["error"] = jerror;
+				this->currentResult = jObject;
+				error = true;
 			}
 			if (this->currentPathIndex < segments.length() - 1)
 			{
@@ -221,6 +233,13 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 				finished = true;
 			}
 		}
+	}
+
+}catch(std::exception &ex){
+	error = true;
+}
+	if(error){
+		throw ODataException("Internal Server Error", this->currentResult);
 	}
 
 	return this->currentResult;
