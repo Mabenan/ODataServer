@@ -48,16 +48,15 @@ QVariant ODataURLWalk::walkURL(QStringList segments)
 				QStringRef keyPart = keyParts[keyNumber];
 				QVector<QStringRef> eachKeyParts = keyPart.split('=');
 				QStringRef keyName = eachKeyParts[0];
-				QStringRef keyValue = eachKeyParts[1];
+				QString keyValue = eachKeyParts[1].toString();
 				if (keyValue.startsWith("'") && keyValue.endsWith("'"))
 				{
-					QString keyValueString = keyValue.toString();
-					QStringRef keyValue2(&keyValueString, 1, keyValueString.length() - 1);
-					keyValue = keyValue2;
+					QStringRef keyValue2(&keyValue, 1, keyValue.length() - 2);
+					keyValue = keyValue2.toString();
 				}
 				qDebug() << keyName.toString();
-				qDebug() << keyValue.toString();
-				keys.insert(keyName.toString(), keyValue.toString());
+				qDebug() << keyValue;
+				keys.insert(keyName.toString(), keyValue);
 			}
 			}
 		}
